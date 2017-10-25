@@ -33,6 +33,6 @@ class CreateClient extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('clients');
     }
 }

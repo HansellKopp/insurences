@@ -34,6 +34,6 @@ class CreateReceipt extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('receipts');
     }
 }
