@@ -17,24 +17,38 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/clients', [
-    'uses' => 'clientController@getClients'
-]);
+/*
+| Resources routes
+*/
 
-Route::get('/client/{id}', [
-    'uses' => 'clientController@getClientById'
-]);
+/*
+| Users
+*/
+Route::resource('users', 'User\UserController');
 
-Route::post('/client', [
-    'uses' => 'clientController@postClient'
-]);
+/*
+| Branches
+*/
+Route::resource('branches', 'Branch\BranchController', ['except' => ['create', 'edit']]);
 
-Route::put('/client/{id}', [
-    'uses' => 'clientController@putClient'
-]);
+/*
+| Companies
+*/
+Route::resource('companies', 'Company\CompanyController', ['only' => ['index', 'show']]);
 
-Route::delete('/client/{id}', [
-    'uses' => 'clientController@deleteClient'
-]);
+/*
+| Clients
+*/
+Route::resource('clients', 'Client\ClientController', ['only' => ['index', 'show']]);
+
+/*
+| Insurences
+*/
+Route::resource('insurences', 'Insurence\InsurenceController', ['except' => ['create', 'edit']]);
+
+/*
+| Receipts
+*/
+Route::resource('recepits', 'Receipt\ReceiptController', ['except' => ['create', 'edit']]);
 
 
