@@ -15,21 +15,24 @@ class CreateInsurenceTable extends Migration
     {
         Schema::create('insurences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('number', 100);
-            $table->unique('number');
+            $table->string('number')->unique();
             $table->date('from');
             $table->date('to');
-            $table->string('pay_form', 100)->nullable();
+            $table->string('pay_form')->nullable();
             $table->double('amount', 15, 8)->nullable();
             $table->double('gainings', 15, 8)->nullable();
-            $table->string('bonus', 100)->nullable();
-            $table->string('currency', 10)->nullable()->default('$');
-            // FOREIGN KEYS
+            $table->double('bonus', 15, 8)->nullable();
+            $table->string('currency')->nullable()->default('$');
             $table->integer('company_id')->unsigned();
             $table->integer('client_id')->unsigned();
-            $table->integer('taker_id')->unsigned();
+            $table->integer('taker_id')->unsigned()->nullable();
             $table->integer('branch_id')->unsigned();
             $table->timestamps();
+             // FOREIGN KEYS
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('taker_id')->references('id')->on('takers');
+            $table->foreign('branch_id')->references('id')->on('branches');
         });
     }
 

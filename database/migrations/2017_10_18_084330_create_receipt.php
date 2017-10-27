@@ -15,14 +15,13 @@ class CreateReceipt extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('number', 100);
-            $table->unique('number');
+            $table->string('number')->unique();
             $table->date('from')->nullable();
             $table->date('to')->nullable();
             $table->double('amount', 15, 8)->nullable();
+            $table->integer('insurence_id')->unsigned();
             $table->timestamps();
             // FOREIGN KEY
-            $table->integer('insurence_id')->unsigned();
             $table->foreign('insurence_id')->references('id')->on('insurences')->onDelete('cascade');
         });
     }
