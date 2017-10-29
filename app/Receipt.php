@@ -16,6 +16,6 @@ class Receipt extends Model
 
     public function insurence() 
     {
-        $this->belongsTo(Insurence::class)
+        $this->belongsTo(Insurence::class);
     }
 }

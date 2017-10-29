@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInsurenceTable extends Migration
+class CreateInsurences extends Migration
 {
     /**
      * Run the migrations.
@@ -20,7 +20,7 @@ class CreateInsurenceTable extends Migration
             $table->date('to');
             $table->string('pay_form')->nullable();
             $table->double('amount', 15, 8)->nullable();
-            $table->double('gainings', 15, 8)->nullable();
+            $table->double('gains', 15, 8)->nullable();
             $table->double('bonus', 15, 8)->nullable();
             $table->string('currency')->nullable()->default('$');
             $table->integer('company_id')->unsigned();
@@ -31,7 +31,7 @@ class CreateInsurenceTable extends Migration
              // FOREIGN KEYS
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('taker_id')->references('id')->on('takers');
+            $table->foreign('taker_id')->references('id')->on('clients');
             $table->foreign('branch_id')->references('id')->on('branches');
         });
     }

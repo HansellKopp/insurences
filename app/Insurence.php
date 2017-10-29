@@ -2,10 +2,6 @@
 
 namespace App;
 
-use App\Company;
-use App\client;
-use App\Taker;
-use App\Branch;
 use Illuminate\Database\Eloquent\Model;
 
 class Insurence extends Model
@@ -27,21 +23,21 @@ class Insurence extends Model
 
     public function company() 
     {
-        $this->belongsTo(Company::class)
+        $this->belongsTo(App\Company::class);
     }
 
     public function client() 
     {
-        $this->belongsTo(Client::class)
+        $this->belongsTo(App\Client::class);
     }
 
     public function taker() 
     {
-        $this->belongsTo(Taker::class)
+        $this->belongsTo(App\Taker::class);
     }
 
     public function branch() 
     {
-        $this->belongsTo(Branch::class)
+        $this->belongsTo(App\Branch::class);
     }
 }
