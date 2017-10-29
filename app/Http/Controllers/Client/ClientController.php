@@ -16,20 +16,8 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::all();
-        $response = [
-            'clients' => $clients
-        ];
-        return response()->json($response, 200);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(['data' => $clients], 200);
     }
 
     /**
@@ -37,10 +25,21 @@ class ClientController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * http headers must contain: [X-Requested-With: XMLHttpRequest]
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $rules = [
+            'name' => 'required|unique:clients',
+            'dni' => 'required|unique:clients',
+            'email' => 'email'
+        ];
+
+        $this->validate($request, $rules);
+
+        $item = Client::create($request->all());
+
+        return response()->json(['data' => $item], 201);
     }
 
     /**
@@ -51,19 +50,11 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = Client::findOrFail($id);
+
+        return response()->json(['data' => $client], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -74,7 +65,19 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::findOrFail($id);
+
+        $rules = [
+            'name' => 'required|unique:clients,name,' . $client->id,
+            'dni' => 'required|unique:clients,dni,' . $client->id,
+            'email' => 'email'
+        ];
+
+        $this->validate($request, $rules);
+
+        $client->update($request->all());
+
+        return response()->json(['data' => $client], 200);
     }
 
     /**
@@ -85,6 +88,10 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = Client::findOrFail($id);
+
+        $client->delete();
+
+        return response()->json(['data' => $client], 200);
     }
 }

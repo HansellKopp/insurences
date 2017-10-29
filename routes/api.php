@@ -39,7 +39,7 @@ Route::resource('companies', 'Company\CompanyController', ['only' => ['index', '
 /*
 | Clients
 */
-Route::resource('clients', 'Client\ClientController', ['only' => ['index', 'show']]);
+Route::resource('clients', 'Client\ClientController');
 
 /*
 | Insurences

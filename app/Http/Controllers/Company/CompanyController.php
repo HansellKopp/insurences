@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Company;
 
+use App\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::all();
+        
+        return response()->json(['data' => $companies], 200);
     }
 
     /**
