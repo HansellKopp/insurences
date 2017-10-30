@@ -26,4 +26,34 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The name attribute must be saved as lowercase at database.
+     *
+     * @value string
+     */
+    public function setNameAttribute($value) 
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
+
+    /**
+     * The name attribute must be show with only first letter capitalized.
+     *
+     */
+    public function getNameAttribute()
+    {
+        return ucwords($this->attributes['name']);
+    }
+
+    /**
+     * The email attribute must be saved as lowercase at database.
+     *
+     * @value string
+     */
+    public function setEmailAttribute($value) 
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
 }
