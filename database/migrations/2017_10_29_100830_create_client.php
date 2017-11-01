@@ -22,6 +22,7 @@ class CreateClient extends Migration
             $table->string('phone')->nullable()->default('');
             $table->string('email')->nullable()->default('');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

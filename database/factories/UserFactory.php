@@ -59,28 +59,28 @@ $factory->define(App\Branch::class, function (Faker $faker) {
 $factory->define(App\Insurence::class, function (Faker $faker) {
     static $amount;
     return [
-        'number' => $faker-randomNumber(8),
+        'number' => $faker->randomNumber(8),
         'from' => $from  = $faker->date($format = 'Y-m-d', $max = '-2 year'),
         'to' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'pay_from' => $faker->randomElement(['cash','credit']),
+        'pay_form' => $faker->randomElement(['cash','credit']),
         'amount' => $amount = $faker->numberBetween(1000000,50000000),
         'gains' => $amount * ( $faker->numberBetween(1,5) / 100 ),
         'bonus' => $faker->numberBetween(0,$amount * .20),
         'currency' => $faker->randomElement(['Bs.','$','€']),
-        'company_id' => App\Company::inRandomOrder()->first->id,
-        'client_id' => App\Client::inRandomOrder()->first->id,
-        'taker_id' => App\Client::inRandomOrder()->first->id,
-        'branch_id' => App\Branch::inRandomOrder()->first->id,
+        'company_id' => App\Company::inRandomOrder()->first()->id,
+        'client_id' => App\Client::inRandomOrder()->first()->id,
+        'taker_id' => App\Client::inRandomOrder()->first()->id,
+        'branch_id' => App\Branch::inRandomOrder()->first()->id,
     ];
 });
 
 $factory->define(App\Receipt::class, function (Faker $faker) {
     static $amount;
     return [
-        'number' => $faker-randomNumber(8),
+        'number' => $faker->randomNumber(8),
         'from' => $faker->date($format = 'Y-m-d', $max = '-2 year'),
         'to' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'amount' => $amount = $faker->numberBetween(1000000,50000000),
-        'insurence_id' => App\Insurence::inRandomOrder()->first->id
+        'insurence_id' => App\Insurence::inRandomOrder()->first()->id
     ];
 });

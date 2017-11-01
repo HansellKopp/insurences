@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         factory(Branch::class, 20)->create();
         factory(Company::class, 50)->create();
         factory(Client::class, 200)->create();
-        factory(Insurences::class, 200)->create();
+        factory(Insurence::class, 200)->create();
         factory(Receipt::class, 200)->create(); 
         // $this->call(UsersTableSeeder::class);
 

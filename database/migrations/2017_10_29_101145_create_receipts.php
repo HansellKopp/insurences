@@ -18,9 +18,10 @@ class CreateReceipts extends Migration
             $table->string('number')->unique();
             $table->date('from')->nullable();
             $table->date('to')->nullable();
-            $table->double('amount', 15, 8)->nullable();
+            $table->double('amount', 15, 2)->nullable();
             $table->integer('insurence_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
             // FOREIGN KEY
             $table->foreign('insurence_id')->references('id')->on('insurences')->onDelete('cascade');
         });
