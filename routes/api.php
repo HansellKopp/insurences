@@ -34,12 +34,12 @@ Route::resource('branches', 'Branch\BranchController', ['except' => ['create', '
 /*
 | Companies
 */
-Route::resource('companies', 'Company\CompanyController', ['only' => ['index', 'show']]);
+Route::resource('companies', 'Company\CompanyController', ['except' => ['create', 'edit']]);
 
 /*
 | Clients
 */
-Route::resource('clients', 'Client\ClientController');
+Route::resource('clients', 'Client\ClientController',['except' => ['create', 'edit']]);
 
 /*
 | Insurences

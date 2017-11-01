@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Branch;
 
+use App\Branch;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
@@ -14,17 +15,9 @@ class BranchController extends ApiController
      */
     public function index()
     {
-        //
-    }
+        $branches = Branch::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->showAll($branches);
     }
 
     /**
@@ -35,51 +28,59 @@ class BranchController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|unique:branches'
+        ];
+
+        $this->validate($request, $rules);
+
+        $item = Branch::create($request->all());
+
+        return $this->showOne($item, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Branch $branch)
     {
-        //
+        return $this->showOne($branch);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Branch $branch)
     {
-        //
+        $rules = [
+            'name' => 'required|unique:branch,name,' . $branch->id
+        ];
+
+        $this->validate($request, $rules);
+
+        $branch->update($request->all());
+
+        return $this->showOne($branch);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Branch $branch)
     {
-        //
+        $branch->delete();
+        
+        return $this->showOne($branch);
     }
 }
