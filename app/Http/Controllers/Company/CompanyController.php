@@ -16,19 +16,10 @@ class CompanyController extends ApiController
     public function index()
     {
         $companies = Company::all();
-        
-        return response()->json(['data' => $companies], 200);
+
+        return $this->showAll($companies);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,51 +29,60 @@ class CompanyController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|unique:company',
+            'dni' => 'required|unique:company',
+            'email' => 'email'
+        ];
+
+        $this->validate($request, $rules);
+
+        $item = Company::create($request->all());
+
+        return $this->showOne($item, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Company $company)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->showOne($company);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
-        //
+        $rules = [
+            'name' => 'required|unique:companies,name,' . $company->id
+        ];
+
+        $this->validate($request, $rules);
+
+        $company->update($request->all());
+
+        return $this->showOne($company);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        
+        return $this->showOne($company);
     }
 }
