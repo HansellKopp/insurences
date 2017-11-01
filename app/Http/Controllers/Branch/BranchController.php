@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Branch;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class BranchController extends Controller
+class BranchController extends ApiController
 {
     /**
      * Display a listing of the resource.

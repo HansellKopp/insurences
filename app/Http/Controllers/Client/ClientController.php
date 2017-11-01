@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Client;
 
 use App\Client;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class ClientController extends Controller
+class ClientController extends ApiController
 {
+    use ApiResponser;
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +20,7 @@ class ClientController extends Controller
     {
         $clients = Client::all();
 
-        return response()->json(['data' => $clients], 200);
+        return $this->showAll($clients);
     }
 
     /**
@@ -39,7 +42,7 @@ class ClientController extends Controller
 
         $item = Client::create($request->all());
 
-        return response()->json(['data' => $item], 201);
+        return $this->showOne($item, 201);
     }
 
     /**
@@ -52,7 +55,7 @@ class ClientController extends Controller
     {
         $client = Client::findOrFail($id);
 
-        return response()->json(['data' => $client], 200);
+        return $this->showOne($client);
     }
 
 
@@ -77,7 +80,7 @@ class ClientController extends Controller
 
         $client->update($request->all());
 
-        return response()->json(['data' => $client], 200);
+        return $this->showOne($client);
     }
 
     /**
@@ -92,6 +95,6 @@ class ClientController extends Controller
 
         $client->delete();
 
-        return response()->json(['data' => $client], 200);
+        return $this->showOne($client);
     }
 }

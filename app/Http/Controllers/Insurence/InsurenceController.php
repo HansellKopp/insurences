@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Insurence;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class InsurenceController extends Controller
+class InsurenceController extends ApiController
 {
     /**
      * Display a listing of the resource.

@@ -3,10 +3,21 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Traits\ApiResponser;
+use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use ApiResponser;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -48,6 +59,57 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof ValidationException)
+        {
+            $errors = $exception->validator->getMessageBag();
+            return $this->errorResponse($errors, 422);
+        }
+
+        if($exception instanceof ModelNotFoundException)
+        {
+            $model = strtolower(class_basename($exception->getModel()));
+            return $this->errorResponse("{$model} instance not found", 404);
+        }
+
+        if($exception instanceof AuthenticationException)
+        {
+            return $this->errorResponse('user not authenticated', 401);
+        }
+
+        if($exception instanceof AuthorizationException)
+        {
+            return $this->errorResponse('no authorization for these action', 403);
+        }
+
+        if($exception instanceof NotFoundHttpException)
+        {
+            return $this->errorResponse('url not found', 404);
+        }
+
+        if($exception instanceof MethodNotAllowedHttpException)
+        {
+            return $this->errorResponse('request method not allowed', 405);
+        }
+
+        if($exception instanceof HttpException)
+        {
+            return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
+        }
+        
+        if($exception instanceof QueryException)
+        {
+            $errorCode = $exception->errorInfo[1];
+            if($errorCode = 1451)
+            {
+                return $this->errorResponse('action not possible, integrity reference', 409);
+            }
+        }
+
+        if(!config('app.debug'))
+        {
+            return $this->errorResponse('internal error', 500);
+        }
+        
         return parent::render($request, $exception);
     }
 }

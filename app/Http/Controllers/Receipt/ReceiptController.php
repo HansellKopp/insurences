@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Receipt;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class ReceiptController extends Controller
+class ReceiptController extends ApiController
 {
     /**
      * Display a listing of the resource.
