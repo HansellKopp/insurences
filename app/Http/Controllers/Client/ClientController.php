@@ -48,13 +48,11 @@ class ClientController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Client $client)
     {
-        $client = Client::findOrFail($id);
-
         return $this->showOne($client);
     }
 
@@ -63,13 +61,11 @@ class ClientController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $client)
     {
-        $client = Client::findOrFail($id);
-
         $rules = [
             'name' => 'required|unique:clients,name,' . $client->id,
             'dni' => 'required|unique:clients,dni,' . $client->id,
@@ -86,13 +82,11 @@ class ClientController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        $client = Client::findOrFail($id);
-
         $client->delete();
 
         return $this->showOne($client);
