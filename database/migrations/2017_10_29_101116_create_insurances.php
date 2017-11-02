@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInsurences extends Migration
+class CreateInsurances extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInsurences extends Migration
      */
     public function up()
     {
-        Schema::create('insurences', function (Blueprint $table) {
+        Schema::create('insurances', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number')->unique();
             $table->date('from');
@@ -44,6 +44,6 @@ class CreateInsurences extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insurences');
+        Schema::dropIfExists('insurances');
     }
 }

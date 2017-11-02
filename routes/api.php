@@ -40,12 +40,13 @@ Route::resource('companies', 'Company\CompanyController', ['except' => ['create'
 | Clients
 */
 Route::resource('clients', 'Client\ClientController',['except' => ['create', 'edit']]);
+Route::resource('clients.insurances', 'Client\ClientInsuranceController', ['only' => ['index']]);
 
 /*
-| Insurences
+| Insurances
 */
-Route::resource('insurences', 'Insurence\InsurenceController', ['except' => ['create', 'edit']]);
-Route::resource('insurences.receipts', 'Insurence\InsurenceReceiptController', ['only' => ['index']]);
+Route::resource('insurances', 'Insurance\InsuranceController', ['except' => ['create', 'edit']]);
+Route::resource('insurances.receipts', 'Insurance\InsuranceReceiptController', ['only' => ['index']]);
 
 /*
 | Receipts

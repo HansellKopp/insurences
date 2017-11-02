@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Insurence;
+namespace App\Http\Controllers\Insurance;
 
-use App\Insurence;
+use App\Insurance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
 
-class InsurenceReceiptController extends ApiController
+class InsuranceReceiptController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Insurence $insurence)
+    public function index(Insurance $insurance)
     {
-        $receipts = $insurence->receipts;
+        $receipts = $insurance->receipts;
         
         return $this->showAll($receipts);
     }
-
 }

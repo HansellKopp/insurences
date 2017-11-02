@@ -10,7 +10,7 @@ use App\Receipt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Insurence extends Model
+class Insurance extends Model
 {
     use SoftDeletes;
     

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Insurence;
+namespace App\Http\Controllers\Insurance;
 
-use App\Insurence;
+use App\Insurance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
-class InsurenceController extends ApiController
+class InsuranceController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class InsurenceController extends ApiController
      */
     public function index()
     {
-        $insurences = Insurence::all();
+        $insurances = Insurance::all();
 
-        return $this->showAll($insurences);
+        return $this->showAll($insurances);
     }
 
     /**
@@ -34,12 +34,12 @@ class InsurenceController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Insurence  $insurence
+     * @param  \App\Insurance  $insurance
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurence $insurence)
+    public function show(Insurance $insurance)
     {
-        return $this->showOne($insurence);
+        return $this->showOne($insurance);
     }
 
 
@@ -47,10 +47,10 @@ class InsurenceController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Insurence  $insurence
+     * @param  \App\Insurance  $insurance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurence $insurence)
+    public function update(Request $request, Insurance $insurance)
     {
         //
     }
@@ -58,10 +58,10 @@ class InsurenceController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Insurence  $insurence
+     * @param  \App\Insurance  $insurance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurence $insurence)
+    public function destroy(Insurance $insurance)
     {
         //
     }

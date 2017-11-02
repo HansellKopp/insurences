@@ -12,3 +12,5 @@
 
 ## Navigate
     localhost:8080
+
+## http headers must contain: [X-Requested-With: XMLHttpRequest]

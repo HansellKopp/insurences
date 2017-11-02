@@ -3,7 +3,7 @@
 use App\Branch;
 use App\Company;
 use App\Client;
-use App\Insurence;
+use App\Insurance;
 use App\Receipt;
 use Faker\Generator as Faker;
 
@@ -56,7 +56,7 @@ $factory->define(App\Branch::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Insurence::class, function (Faker $faker) {
+$factory->define(App\Insurance::class, function (Faker $faker) {
     static $amount;
     return [
         'number' => $faker->randomNumber(8),
@@ -81,6 +81,6 @@ $factory->define(App\Receipt::class, function (Faker $faker) {
         'from' => $faker->date($format = 'Y-m-d', $max = '-2 year'),
         'to' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'amount' => $amount = $faker->numberBetween(1000000,50000000),
-        'insurence_id' => App\Insurence::inRandomOrder()->first()->id
+        'insurance_id' => App\Insurance::inRandomOrder()->first()->id
     ];
 });

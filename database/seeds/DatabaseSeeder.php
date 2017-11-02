@@ -3,7 +3,7 @@
 use App\Branch;
 use App\Company;
 use App\Client;
-use App\Insurence;
+use App\Insurance;
 use App\Receipt;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
         // remove pre existing data if any
-        Insurence::truncate();
+        Insurance::truncate();
         Receipt::truncate();
         Branch::truncate();
         Company::truncate();
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         factory(Branch::class, 20)->create();
         factory(Company::class, 50)->create();
         factory(Client::class, 200)->create();
-        factory(Insurence::class, 200)->create();
+        factory(Insurance::class, 200)->create();
         factory(Receipt::class, 200)->create(); 
         // $this->call(UsersTableSeeder::class);
 
