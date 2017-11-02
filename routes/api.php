@@ -40,7 +40,7 @@ Route::resource('companies', 'Company\CompanyController', ['except' => ['create'
 | Clients
 */
 Route::resource('clients', 'Client\ClientController',['except' => ['create', 'edit']]);
-Route::resource('clients.insurances', 'Client\ClientInsuranceController', ['only' => ['index']]);
+Route::resource('clients.insurances', 'Client\ClientInsuranceController', ['except' => ['create', 'edit']]);
 
 /*
 | Insurances

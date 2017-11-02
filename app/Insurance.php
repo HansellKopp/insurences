@@ -14,6 +14,9 @@ class Insurance extends Model
 {
     use SoftDeletes;
     
+    const CASH = 'cash';
+    const CREDIT = 'credit';
+   
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
@@ -22,7 +25,7 @@ class Insurance extends Model
         'to',
         'pay_form',
         'amount',
-        'gainings',
+        'gains',
         'bonus',
         'currency',
         'company_id',
@@ -30,6 +33,11 @@ class Insurance extends Model
         'taker_id',
         'branch_id'
     ];
+
+    public static function payForms()
+    {
+        return [self::CASH, self::CREDIT];
+    }
 
     public function company() 
     {
