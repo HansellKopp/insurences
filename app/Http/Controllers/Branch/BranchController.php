@@ -61,12 +61,16 @@ class BranchController extends ApiController
     public function update(Request $request, Branch $branch)
     {
         $rules = [
-            'name' => 'required|unique:branch,name,' . $branch->id
+            'name' => 'required|unique:branches,name,' . $branch->id
         ];
 
         $this->validate($request, $rules);
 
-        $branch->update($request->all());
+        $branch->fill($request->all());
+        
+        $this->checkClean($branch);
+
+        $branch->save();
 
         return $this->showOne($branch);
     }

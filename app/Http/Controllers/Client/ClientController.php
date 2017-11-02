@@ -74,7 +74,11 @@ class ClientController extends ApiController
 
         $this->validate($request, $rules);
 
-        $client->update($request->all());
+        $client->fill($request->all());
+
+        $this->checkClean($client);
+
+        $client->save();
 
         return $this->showOne($client);
     }

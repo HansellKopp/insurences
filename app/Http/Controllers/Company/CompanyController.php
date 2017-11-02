@@ -68,8 +68,12 @@ class CompanyController extends ApiController
 
         $this->validate($request, $rules);
 
-        $company->update($request->all());
+        $company->fill($request->all());
+        
+        $this->checkClean($company);
 
+        $company->save();
+        
         return $this->showOne($company);
     }
 

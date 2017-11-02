@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Exceptions\ResourceCleanException;
 use App\Traits\ApiResponser;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
@@ -98,11 +99,17 @@ class Handler extends ExceptionHandler
         
         if($exception instanceof QueryException)
         {
+            dd($exception);
             $errorCode = $exception->errorInfo[1];
             if($errorCode = 1451)
             {
                 return $this->errorResponse('action not possible, integrity reference', 409);
             }
+        }
+
+        if($exception instanceof ResourceCleanException)
+        {
+            return $this->errorResponse($exception->getMessage(),422);
         }
 
         if(!config('app.debug'))
