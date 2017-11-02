@@ -45,10 +45,11 @@ Route::resource('clients', 'Client\ClientController',['except' => ['create', 'ed
 | Insurences
 */
 Route::resource('insurences', 'Insurence\InsurenceController', ['except' => ['create', 'edit']]);
-Route::resource('insurences.recepits', 'Insurence\InsurenceReceiptController', ['only' => ['index']]);
+Route::resource('insurences.receipts', 'Insurence\InsurenceReceiptController', ['only' => ['index']]);
+
 /*
 | Receipts
 */
-Route::resource('recepits', 'Receipt\ReceiptController', ['except' => ['create', 'edit']]);
+Route::resource('receipts', 'Receipt\ReceiptController', ['except' => ['create', 'edit']]);
 
 

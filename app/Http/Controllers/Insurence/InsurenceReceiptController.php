@@ -6,6 +6,7 @@ use App\Insurence;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
+
 class InsurenceReceiptController extends ApiController
 {
     /**
