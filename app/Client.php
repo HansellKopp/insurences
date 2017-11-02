@@ -16,6 +16,6 @@ class Client extends Model
     
     public function insurences()
     {
-        $this->hasMany(Insurrence::class);
+        return $this->hasMany(Insurrence::class);
     }
 }

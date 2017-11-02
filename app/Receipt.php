@@ -22,6 +22,6 @@ class Receipt extends Model
 
     public function insurence() 
     {
-        $this->belongsTo(Insurence::class);
+        return $this->belongsTo(Insurence::class);
     }
 }

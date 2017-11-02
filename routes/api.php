@@ -45,7 +45,7 @@ Route::resource('clients', 'Client\ClientController',['except' => ['create', 'ed
 | Insurences
 */
 Route::resource('insurences', 'Insurence\InsurenceController', ['except' => ['create', 'edit']]);
-
+Route::resource('insurences.recepits', 'Insurence\InsurenceReceiptController', ['only' => ['index']]);
 /*
 | Receipts
 */

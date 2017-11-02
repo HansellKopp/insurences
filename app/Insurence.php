@@ -2,6 +2,11 @@
 
 namespace App;
 
+use App\Company;
+use App\Client;
+use App\Taker;
+use App\Branch;
+use App\Receipt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -28,21 +33,27 @@ class Insurence extends Model
 
     public function company() 
     {
-        $this->belongsTo(App\Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function client() 
     {
-        $this->belongsTo(App\Client::class);
+        return $this->belongsTo(Client::class);
     }
 
     public function taker() 
     {
-        $this->belongsTo(App\Taker::class);
+        return $this->belongsTo(Taker::class);
     }
 
     public function branch() 
     {
-        $this->belongsTo(App\Branch::class);
+        return $this->belongsTo(Branch::class);
     }
+
+    public function receipts()
+    {
+        return $this->hasMany(Receipt::class);
+    }
+    
 }

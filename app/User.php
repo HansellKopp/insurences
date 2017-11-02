@@ -37,7 +37,7 @@ class User extends Authenticatable
      */
     public function setNameAttribute($value) 
     {
-        $this->attributes['name'] = strtolower($value);
+        return $this->attributes['name'] = strtolower($value);
     }
 
     /**
@@ -56,7 +56,7 @@ class User extends Authenticatable
      */
     public function setEmailAttribute($value) 
     {
-        $this->attributes['email'] = strtolower($value);
+        return $this->attributes['email'] = strtolower($value);
     }
 
 }
