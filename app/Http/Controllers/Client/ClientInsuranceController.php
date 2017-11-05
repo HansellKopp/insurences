@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Client;
 
 use App\Client;
-use App\Insurance;
+use App\Policy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\ApiController;
 
-class ClientInsuranceController extends ApiController
+class ClientPolicyController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,9 @@ class ClientInsuranceController extends ApiController
      */
     public function index(Client $client)
     {
-        $insurances = $client->insurances;
+        $policies = $client->policies;
         
-        return $this->showAll($insurances);
+        return $this->showAll($policies);
     }
 
      /**
@@ -34,12 +34,12 @@ class ClientInsuranceController extends ApiController
     public function store(Request $request, Client $client)
     {   
         $rules = [
-            'number' => 'required|unique:insurances',
+            'number' => 'required|unique:policies',
             'from' => 'required|date',
             'to' => 'required|date',
             'pay_form' => [
                 'required',
-                Rule::in(Insurance::payForms())
+                Rule::in(Policy::payForms())
             ],
             'amount' => 'required|numeric',
             'gains' => 'required|numeric',
@@ -57,7 +57,7 @@ class ClientInsuranceController extends ApiController
 
         $data['client_id'] = $client->id;
 
-        $item = Insurance::create($data);
+        $item = Policy::create($data);
 
         return $this->showOne($item, 201);
     }

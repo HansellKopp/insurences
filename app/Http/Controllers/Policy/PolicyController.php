@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Insurance;
+namespace App\Http\Controllers\Policy;
 
-use App\Insurance;
+use App\Policy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\ApiController;
 
-class InsuranceController extends ApiController
+class PolicyController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,38 +16,38 @@ class InsuranceController extends ApiController
      */
     public function index()
     {
-        $insurances = Insurance::all();
+        $policies = Policy::all();
 
-        return $this->showAll($insurances);
+        return $this->showAll($policies);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Insurance  $insurance
+     * @param  \App\Policy  $policy
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurance $insurance)
+    public function show(Policy $policy)
     {
-        return $this->showOne($insurance);
+        return $this->showOne($policy);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Insurance  $insurance
+     * @param  \App\Policy  $policy
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurance $insurance)
+    public function update(Request $request, Policy $policy)
     {
         $rules = [
-            'number' => 'required|unique:insurances,number,' . $insurance->id,
+            'number' => 'required|unique:policies,number,' . $policy->id,
             'from' => 'required|date',
             'to' => 'required|date',
             'pay_form' => [
                 'required',
-                Rule::in(Insurance::payForms())
+                Rule::in(Policy::payForms())
             ],
             'amount' => 'required|numeric',
             'gains' => 'required|numeric',
@@ -62,25 +62,25 @@ class InsuranceController extends ApiController
 
         $this->validate($request, $rules);
 
-        $insurance->fill($request->all());
+        $policy->fill($request->all());
 
-        $this->checkClean($insurance);
+        $this->checkClean($policy);
 
-        $insurance->save();
+        $policy->save();
 
-        return $this->showOne($insurance, 201);
+        return $this->showOne($policy, 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Insurance  $insurance
+     * @param  \App\Policy  $policy
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurance $insurance)
+    public function destroy(Policy $policy)
     {
-        $insurance->delete();
+        $policy->delete();
         
-        return $this->showOne($insurance);
+        return $this->showOne($policy);
     }
 }

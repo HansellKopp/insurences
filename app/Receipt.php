@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Insurance;
+use App\Policy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,11 +17,11 @@ class Receipt extends Model
         'from',
         'to',
         'amount',
-        'insurance_id'
+        'policy_id'
     ];
 
-    public function insurance() 
+    public function policy() 
     {
-        return $this->belongsTo(Insurance::class);
+        return $this->belongsTo(Policy::class);
     }
 }

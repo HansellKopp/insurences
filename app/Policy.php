@@ -10,7 +10,7 @@ use App\Receipt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Insurance extends Model
+class Policy extends Model
 {
     use SoftDeletes;
     
@@ -33,11 +33,6 @@ class Insurance extends Model
         'taker_id',
         'branch_id'
     ];
-
-    public static function query()
-    {
-        return (new static)->newQuery();
-    }
     
     public static function payForms()
     {

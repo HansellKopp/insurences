@@ -39,13 +39,13 @@ Route::resource('companies', 'Company\CompanyController', ['except' => ['create'
 | Clients
 */
 Route::resource('clients', 'Client\ClientController',['except' => ['create', 'edit']]);
-Route::resource('clients.insurances', 'Client\ClientInsuranceController', ['only' => ['index', 'store']]);
+Route::resource('clients.policies', 'Client\ClientPolicyController', ['only' => ['index', 'store']]);
 
 /*
-| Insurances
+| Policys
 */
-Route::resource('insurances', 'Insurance\InsuranceController', ['except' => ['create', 'edit', 'store']]);
-Route::resource('insurances.receipts', 'Insurance\InsuranceReceiptController', ['only' => ['index']]);
+Route::resource('policies', 'Policy\PolicyController', ['except' => ['create', 'edit', 'store']]);
+Route::resource('policies.receipts', 'Policy\PolicyReceiptController', ['only' => ['index']]);
 
 /*
 | Receipts

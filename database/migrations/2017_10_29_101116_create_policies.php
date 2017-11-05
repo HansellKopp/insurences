@@ -1,11 +1,11 @@
 <?php
 
-use App\Insurance;
+use App\Policy;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInsurances extends Migration
+class CreatePolicies extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,12 @@ class CreateInsurances extends Migration
      */
     public function up()
     {
-        Schema::create('insurances', function (Blueprint $table) {
+        Schema::create('policies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number')->unique();
             $table->date('from');
             $table->date('to');
-            $table->string('pay_form')->default(Insurance::CASH);
+            $table->string('pay_form')->default(Policy::CASH);
             $table->double('amount', 15, 2)->nullable();
             $table->double('gains', 15, 2)->nullable();
             $table->double('bonus', 15, 2)->nullable();
@@ -45,6 +45,6 @@ class CreateInsurances extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insurances');
+        Schema::dropIfExists('policies');
     }
 }

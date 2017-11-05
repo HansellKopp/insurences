@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Insurance;
+use App\Policy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,8 +14,8 @@ class Company extends Model
 
     protected $fillable = ['name', 'dni', 'address', 'phone', 'email'];
 
-    public function insurances()
+    public function policies()
     {
-        return $this->hasMany(Insurrance::class);
+        return $this->hasMany(Policy::class);
     }
 }
