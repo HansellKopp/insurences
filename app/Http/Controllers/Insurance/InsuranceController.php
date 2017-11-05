@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Insurance;
 
 use App\Insurance;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\ApiController;
 
 class InsuranceController extends ApiController
@@ -21,17 +22,6 @@ class InsuranceController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Insurance  $insurance
@@ -42,7 +32,6 @@ class InsuranceController extends ApiController
         return $this->showOne($insurance);
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -52,7 +41,34 @@ class InsuranceController extends ApiController
      */
     public function update(Request $request, Insurance $insurance)
     {
-        //
+        $rules = [
+            'number' => 'required|unique:insurances,number,' . $insurance->id,
+            'from' => 'required|date',
+            'to' => 'required|date',
+            'pay_form' => [
+                'required',
+                Rule::in(Insurance::payForms())
+            ],
+            'amount' => 'required|numeric',
+            'gains' => 'required|numeric',
+            'bonus' => 'required|numeric',
+            'currency' => 'required',
+            'taker_id' => 'exists:clients,id',
+            'client_id' => 'required|exists:clients,id',
+            'company_id' => 'exists:companies,id',
+            'branch_id' => 'exists:branches,id',
+            
+        ];
+
+        $this->validate($request, $rules);
+
+        $insurance->fill($request->all());
+
+        $this->checkClean($insurance);
+
+        $insurance->save();
+
+        return $this->showOne($insurance, 201);
     }
 
     /**
@@ -63,6 +79,8 @@ class InsuranceController extends ApiController
      */
     public function destroy(Insurance $insurance)
     {
-        //
+        $insurance->delete();
+        
+        return $this->showOne($insurance);
     }
 }

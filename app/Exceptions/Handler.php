@@ -100,7 +100,6 @@ class Handler extends ExceptionHandler
         
         if($exception instanceof QueryException)
         {
-            dd($exception);
             $errorCode = $exception->errorInfo[1];
             if($errorCode = 1451)
             {
@@ -115,6 +114,7 @@ class Handler extends ExceptionHandler
 
         if(!config('app.debug'))
         {
+            
             return $this->errorResponse('internal error', 500);
         }
         

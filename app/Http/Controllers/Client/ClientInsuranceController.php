@@ -13,6 +13,7 @@ class ClientInsuranceController extends ApiController
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function index(Client $client)
@@ -26,6 +27,7 @@ class ClientInsuranceController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      * http headers must contain: [X-Requested-With: XMLHttpRequest]
      */
@@ -49,7 +51,6 @@ class ClientInsuranceController extends ApiController
             
         ];
 
-        
         $this->validate($request, $rules);
 
         $data = $request->all();
@@ -60,4 +61,5 @@ class ClientInsuranceController extends ApiController
 
         return $this->showOne($item, 201);
     }
+
 }
