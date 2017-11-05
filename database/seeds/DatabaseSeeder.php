@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
         factory(Branch::class, 20)->create();
         factory(Company::class, 50)->create();
         factory(Client::class, 200)->create();
-        factory(Insurance::class, 200)->create();
         factory(Receipt::class, 200)->create(); 
+        factory(Insurance::class, 200)->create();
         // $this->call(UsersTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');

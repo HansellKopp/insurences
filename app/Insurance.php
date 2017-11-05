@@ -34,6 +34,11 @@ class Insurance extends Model
         'branch_id'
     ];
 
+    public static function query()
+    {
+        return (new static)->newQuery();
+    }
+    
     public static function payForms()
     {
         return [self::CASH, self::CREDIT];
