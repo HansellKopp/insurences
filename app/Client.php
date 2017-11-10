@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Policy;
+use App\Client\Document;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,5 +18,10 @@ class Client extends Model
     public function policies()
     {
         return $this->hasMany(Policy::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(ClientDocument::class);
     }
 }

@@ -38,18 +38,25 @@ Route::resource('companies', 'Company\CompanyController', ['except' => ['create'
 /*
 | Clients
 */
+Route::get('clients/birthdays', 'Client\ClientBirthdayController@index');
 Route::resource('clients', 'Client\ClientController',['except' => ['create', 'edit']]);
 Route::resource('clients.policies', 'Client\ClientPolicyController', ['only' => ['index', 'store']]);
+Route::resource('clients.documents', 'Client\ClientDocumentController', ['except' => ['create', 'edit']]);
 
 /*
-| Policys
+| Policies
 */
 Route::resource('policies', 'Policy\PolicyController', ['except' => ['create', 'edit', 'store']]);
 Route::resource('policies.receipts', 'Policy\PolicyReceiptController', ['only' => ['index']]);
+// Policies.documents
+// Policies.expirations
+// Policies.earnings
 
 /*
 | Receipts
 */
 Route::resource('receipts', 'Receipt\ReceiptController', ['except' => ['create','edit','store']]);
+
+
 
 

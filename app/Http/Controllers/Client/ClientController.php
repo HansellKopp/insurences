@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use App\Client;
-use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
 class ClientController extends ApiController
 {
-    use ApiResponser;
-
     /**
      * Display a listing of the resource.
      *
