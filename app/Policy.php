@@ -7,6 +7,7 @@ use App\Client;
 use App\Taker;
 use App\Branch;
 use App\Receipt;
+use App\PolicyDocument;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -63,5 +64,9 @@ class Policy extends Model
     {
         return $this->hasMany(Receipt::class);
     }
-    
+
+    public function documents()
+    {
+        return $this->hasMany(PolicyDocument::class);
+    }  
 }

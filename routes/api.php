@@ -41,14 +41,14 @@ Route::resource('companies', 'Company\CompanyController', ['except' => ['create'
 Route::get('clients/birthdays', 'Client\ClientBirthdayController@index');
 Route::resource('clients', 'Client\ClientController',['except' => ['create', 'edit']]);
 Route::resource('clients.policies', 'Client\ClientPolicyController', ['only' => ['index', 'store']]);
-Route::resource('clients.documents', 'Client\ClientDocumentController', ['except' => ['create', 'edit']]);
+Route::resource('clients.documents', 'Client\ClientDocumentController', ['except' => ['create', 'edit','update']]);
 
 /*
 | Policies
 */
 Route::resource('policies', 'Policy\PolicyController', ['except' => ['create', 'edit', 'store']]);
 Route::resource('policies.receipts', 'Policy\PolicyReceiptController', ['only' => ['index']]);
-// Policies.documents
+Route::resource('policies.documents', 'Policy\PolicyDocumentController', ['except' => ['create', 'edit','update']]);
 // Policies.expirations
 // Policies.earnings
 
