@@ -23,7 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 /*
 | Users
 */
-Route::resource('users', 'User\UserController');
+Route::resource('users', 'User\UserController',['except' => ['create', 'edit']]);
+Route::name('user_verify')->get('users/verify/{token}','User\UserControler@verify');
 
 /*
 | Branches

@@ -10,6 +10,9 @@ class User extends Authenticatable
 {
     use Notifiable, SoftDeletes;
     
+    const VERIFIED = 'verified';
+    const NOT_VERIFIED = 'not verified';
+
     protected $dates = ['deleted_at'];
 
     /**
@@ -27,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','verification_token'
     ];
 
     /**
