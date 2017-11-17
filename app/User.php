@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','remember_token'
     ];
 
     /**
@@ -30,13 +30,33 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','verification_token'
+        'password','verification_token'
     ];
+
+    /**
+     * Generate user verification token
+     * 
+     * @return string
+     */
+     public static function generateVerificationToken()
+     {
+        return str_random(40);
+     }
+
+    /**
+     * Generate user verification token
+     * 
+     * @return string
+     */
+    public static function generateRememberToken()
+    {
+       return str_random(20);
+    }
 
     /**
      * The name attribute must be saved as lowercase at database.
      *
-     * @value string
+     * @return @value string
      */
     public function setNameAttribute($value) 
     {
@@ -46,6 +66,7 @@ class User extends Authenticatable
     /**
      * The name attribute must be show with only first letter capitalized.
      *
+     * @return string
      */
     public function getNameAttribute()
     {
@@ -55,7 +76,9 @@ class User extends Authenticatable
     /**
      * The email attribute must be saved as lowercase at database.
      *
-     * @value string
+     * @param value string
+     * 
+     * @return string
      */
     public function setEmailAttribute($value) 
     {

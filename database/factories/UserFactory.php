@@ -25,10 +25,10 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'password' => $password ?: $password = password_hash('secret', PASSWORD_DEFAULT),
+        'remember_token' => App\User::generateRememberToken(),
         'verified' => User::NOT_VERIFIED,
-        'verification_token' => str_random(20),
+        'verification_token' => App\User::generateVerificationToken(),
     ];
 });
 

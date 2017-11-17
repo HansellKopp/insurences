@@ -15,9 +15,20 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $this->showAll(User::all());
+        return $this->showAll(User::all());
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return $this->showOne($user);
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -30,13 +41,22 @@ class UserController extends ApiController
         $rules = [
             'name' => 'required|unique:clients',
             'email' => 'required|unique:clients',
+            'password' => 'required|confirmed|min:6',
         ];
 
         $this->validate($request, $rules);
 
-        $user = Client::create($request->all());
+        $data = $request->all();
 
-        $user->verified = User::NOT_VERIFIED;
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        $data['verified'] =  User::NOT_VERIFIED;
+
+        $data['verification_token'] = User::generateVerificationToken();
+
+        $data['remember_token'] = User::generateRememberToken();
+
+        $user = User::create($data);
 
         return $this->showOne($user, 201);
     }
@@ -55,15 +75,20 @@ class UserController extends ApiController
         $rules = [
             'name' => 'required|unique:users,name,' . $user->id,
             'email' => 'email|unique:users,email,' . $user->id,
+            'password' => 'required|confirmed|min:6',
         ];
+        
+        $user->fill($request->all());
 
         $this->validate($request, $rules);
 
-        $user->fill($request->all());
-
-        $this->checkClean($user);
-
-        $user->verified = User::NOT_VERIFIED;
+        $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+        
+        $user['verified'] =  User::NOT_VERIFIED;
+        
+        $user['verification_token'] = User::generateVerificationToken();
+        
+        $user['remember_token'] = User::generateRememberToken();
 
         $user->save();
 

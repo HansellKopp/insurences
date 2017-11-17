@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('verified')->default(User::NOT_VERIFIED);
-            $table->string('verification_token');
+            $table->string('verification_token')->default(User::generateVerificationToken());
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

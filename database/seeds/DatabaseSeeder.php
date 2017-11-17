@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use App\Branch;
 use App\Company;
 use App\Client;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
         // remove pre existing data if any
+        User::truncate();
         Policy::truncate();
         Receipt::truncate();
         Branch::truncate();
@@ -28,6 +30,7 @@ class DatabaseSeeder extends Seeder
         Client::truncate();
 
         // Start using Factories
+        factory(User::class, 5)->create();
         factory(Branch::class, 20)->create();
         factory(Company::class, 50)->create();
         factory(Client::class, 200)->create();
