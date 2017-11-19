@@ -30,6 +30,6 @@ class UserEmailChanged extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.change');
+        return $this->markdown('emails.change');
     }
 }
