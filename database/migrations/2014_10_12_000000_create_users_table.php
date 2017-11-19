@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('verified')->default(User::NOT_VERIFIED);
-            $table->string('verification_token')->default(User::generateVerificationToken());
+            $table->string('verification_token')->nullable()->default(User::generateVerificationToken());
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

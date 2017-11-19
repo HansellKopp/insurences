@@ -48,16 +48,13 @@ class ClientPolicyController extends ApiController
             'taker_id' => 'exists:clients,id',
             'company_id' => 'exists:companies,id',
             'branch_id' => 'exists:branches,id',
-            
         ];
 
         $this->validate($request, $rules);
 
-        $data = $request->all();
+        $data = new Policy($request->all());
 
-        $data['client_id'] = $client->id;
-
-        $item = Policy::create($data);
+        $item = $client->policies()->save($data);
 
         return $this->showOne($item, 201);
     }

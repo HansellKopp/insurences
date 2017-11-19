@@ -28,7 +28,7 @@ class UserController extends ApiController
     {
         return $this->showOne($user);
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -118,11 +118,11 @@ class UserController extends ApiController
      */
     public function verify($token)
     {
-       $user = User::where('verification_token',$token)->firsOrFail();
+       $user = User::where('verification_token',$token)->firstOrFail();
 
        $user->verified = User::VERIFIED;
 
-       $user->token = null;
+       $user->verification_token = null;
 
        $user->save();
 
