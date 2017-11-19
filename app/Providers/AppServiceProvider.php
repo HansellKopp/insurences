@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\User;
 use App\Mail\UserCreated;
+use App\Mail\UserEmailChanged;
 Use Illuminate\Support\Facades\Mail;
 Use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,15 @@ class AppServiceProvider extends ServiceProvider
          */
         User::created(function($user) {
             Mail::to($user)->send(new UserCreated($user));
+        });
+
+        /**
+         * event to send a email when new user changed his email 
+         */
+        User::updated(function($user) {
+            if ($user->isDirty('email')) {
+                Mail::to($user)->send(new UserEmailChanged($user));
+            }
         });
     }
 
