@@ -7,9 +7,10 @@ namespace App\Http\Controllers\Receipt;
 
 use App\Receipt;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Receipt as ReceiptResource;
 
-class ReceiptController extends ApiController
+class ReceiptController extends Controller
 {
     /**
      * Display the specified resource.
@@ -19,7 +20,7 @@ class ReceiptController extends ApiController
      */
     public function show(Receipt $receipt)
     {
-        return $this->showOne($receipt);
+        return new ReceiptResource($receipt);
     }
 
     /**
@@ -45,11 +46,13 @@ class ReceiptController extends ApiController
         $receipt['to'] = $request->to;
         $receipt['amount'] = $request->amount;
 
-        $this->checkClean($receipt);
+        if($receipt->isClean()) {
+            throw new ResourceCleanException();
+        }
 
         $receipt->save();
 
-        return $this->showOne($receipt, 201);
+        return new ReceiptResource($receipt, 201);
     }
 
     /**
@@ -62,6 +65,6 @@ class ReceiptController extends ApiController
     {
         $receipt->delete();
         
-        return $this->showOne($receipt);
+        return new ReceiptResource($receipt);
     }
 }

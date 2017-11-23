@@ -21,42 +21,55 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 /*
-| Users
+| Api Resource basic routes
 */
-Route::resource('users', 'User\UserController',['except' => ['create', 'edit']]);
+Route::apiResources([
+    'users' => 'User\UserController',
+    'branches' => 'Branch\BranchController',
+    'companies' => 'Company\CompanyController',
+    'clients' => 'Client\ClientController'
+]);
+
+/**
+ * Retrive clients with birtdays between to dates
+ */
+Route::get('clients/birthdays','Client\ClientController@birthdays');
+
+/**
+ * Client documents resource
+ */
+Route::resource('clients.documents', 'Client\ClientDocumentController', ['only' => ['store', 'show','destroy']]);
+
+/**
+ * Store client's policies
+ */
+Route::post('clients.policies', 'Client\ClientPolicyController@store');
+
+
+/*
+| Policies resource partial methods
+*/
+Route::resource('policies', 'Policy\PolicyController', ['except' => ['store','create','edit']]);
+/**
+ * Retrive policies with expiration between to dates
+ */
+Route::get('policies/expirations','Policy\PolicyController@expirations');
+Route::resource('policies.documents', 'Policy\PolicyDocumentController', ['except' => ['create', 'edit','update']]);
+
+/*
+| Receipts resource
+*/
+Route::resource('receipts', 'Receipt\ReceiptController', ['only' => ['show','update','destroy']]);
+
+/**
+ * Verify user email
+ */
 Route::name('user_verify')->get('users/verify/{token}','User\UserController@verify');
 
-/*
-| Branches
-*/
-Route::resource('branches', 'Branch\BranchController', ['except' => ['create', 'edit']]);
 
-/*
-| Companies
-*/
-Route::resource('companies', 'Company\CompanyController', ['except' => ['create', 'edit']]);
 
-/*
-| Clients
-*/
-Route::get('clients/birthdays', 'Client\ClientBirthdayController@index');
-Route::resource('clients', 'Client\ClientController',['except' => ['create', 'edit']]);
-Route::resource('clients.policies', 'Client\ClientPolicyController', ['only' => ['index', 'store']]);
-Route::resource('clients.documents', 'Client\ClientDocumentController', ['except' => ['create', 'edit','update']]);
 
-/*
-| Policies
-*/
-Route::resource('policies', 'Policy\PolicyController', ['except' => ['create', 'edit', 'store']]);
-Route::resource('policies.receipts', 'Policy\PolicyReceiptController', ['only' => ['index']]);
-Route::resource('policies.documents', 'Policy\PolicyDocumentController', ['except' => ['create', 'edit','update']]);
-// Policies.expirations
-// Policies.earnings
 
-/*
-| Receipts
-*/
-Route::resource('receipts', 'Receipt\ReceiptController', ['except' => ['create','edit','store']]);
 
 
 

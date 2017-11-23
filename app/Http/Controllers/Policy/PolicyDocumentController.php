@@ -6,26 +6,13 @@ use App\Policy;
 use App\PolicyDocument;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Resources\PolicyDocument as PolicyDocumentResource;
 
-class PolicyDocumentController extends ApiController
+class PolicyDocumentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  \App\Policy  $policy
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Policy $policy)
-    {
-        $documents = $policy->documents;
-        
-        return $this->showAll($documents);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -49,7 +36,7 @@ class PolicyDocumentController extends ApiController
 
         $item = PolicyDocument::create($data);
 
-        return $this->showOne($item);
+        return new PolicyDocumentResource($item);
     }
 
     /**
@@ -94,6 +81,6 @@ class PolicyDocumentController extends ApiController
 
         Storage::delete($item->document);
 
-        return $this->showOne($item);
+        return new PolicyDocumentResource($item);
     }
 }

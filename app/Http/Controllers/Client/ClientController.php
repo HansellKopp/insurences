@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Client;
 
 use App\Client;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Client as ClientResource;
 
-class ClientController extends ApiController
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,7 @@ class ClientController extends ApiController
      */
     public function index()
     {
-        $clients = Client::all();
-
-        return $this->showAll($clients);
+        return ClientResource::collection(Client::paginate(10));
     }
 
     /**
@@ -39,7 +38,7 @@ class ClientController extends ApiController
 
         $item = Client::create($request->all());
 
-        return $this->showOne($item, 201);
+        return new ClientResource($item, 201);
     }
 
     /**
@@ -50,7 +49,7 @@ class ClientController extends ApiController
      */
     public function show(Client $client)
     {
-        return $this->showOne($client);
+        return new ClientResource($client);
     }
 
 
@@ -73,11 +72,13 @@ class ClientController extends ApiController
 
         $client->fill($request->all());
 
-        $this->checkClean($client);
+        if($client->isClean()) {
+            throw new ResourceCleanException();
+        }
 
         $client->save();
 
-        return $this->showOne($client);
+        return new ClientResource($client);
     }
 
     /**
@@ -90,6 +91,30 @@ class ClientController extends ApiController
     {
         $client->delete();
 
-        return $this->showOne($client);
+        return new ClientResource($client);
     }
+
+    /* Display a listing of clients with birthday between dates
+    *
+    * @param  Request $request
+    * @return \Illuminate\Http\Response
+    */
+   public function birthdays(Request $request)
+   {
+       $rules = [
+           'from' => 'required|date',
+           'to' => 'required|date'
+       ];
+
+       $request->validate($rules);
+
+       $to = $request->to;
+       $from = $request->from;
+
+       $clients = Client::whereRaw("DAYOFYEAR(birth_date) >= DAYOFYEAR('${from}') and DAYOFYEAR(birth_date) <= DAYOFYEAR('${to}')")
+               ->orderByRaw('DAYOFYEAR(birth_date)')
+               ->paginate();
+
+       return ClientResource::collection($clients);
+   }
 }

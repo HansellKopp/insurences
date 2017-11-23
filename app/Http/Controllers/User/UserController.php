@@ -4,9 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
+use App\Http\Resources\User as UserResource;
+use App\Http\Controllers\Controller;
 
-class UserController extends ApiController
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        return $this->showAll(User::all());
+        return UserResource::collection(User::paginate());
     }
 
     /**
@@ -26,7 +27,7 @@ class UserController extends ApiController
      */
     public function show(User $user)
     {
-        return $this->showOne($user);
+        return new UserResource($user);
     }
 
     /**
@@ -58,7 +59,7 @@ class UserController extends ApiController
 
         $user = User::create($data);
 
-        return $this->showOne($user, 201);
+        return new UserResource($user,201);
     }
 
 
@@ -92,7 +93,7 @@ class UserController extends ApiController
 
         $user->save();
 
-        return $this->showOne($user);
+        return new UserResource($user);
     }
 
     /**
@@ -106,7 +107,7 @@ class UserController extends ApiController
     {
         $user->delete();
 
-        return $this->showOne($user);
+        return new UserResource($user);
     }
 
     /**
@@ -126,6 +127,6 @@ class UserController extends ApiController
 
        $user->save();
 
-       return $this->showOne($user);
+       return new UserResource($user);
     }
 }

@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Policy;
 use App\Policy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Policy as PolicyResource;
 
-class PolicyController extends ApiController
+class PolicyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,7 @@ class PolicyController extends ApiController
      */
     public function index()
     {
-        $policies = Policy::all();
-
-        return $this->showAll($policies);
+        return PolicyResource::collection(Policy::paginate());
     }
 
     /**
@@ -29,7 +28,7 @@ class PolicyController extends ApiController
      */
     public function show(Policy $policy)
     {
-        return $this->showOne($policy);
+        return new PolicyResource($policy);
     }
 
     /**
@@ -64,11 +63,13 @@ class PolicyController extends ApiController
 
         $policy->fill($request->all());
 
-        $this->checkClean($policy);
+        if($policy->isClean()) {
+            throw new ResourceCleanException();
+        }
 
         $policy->save();
 
-        return $this->showOne($policy, 201);
+        return new PolicyResource($policy, 201);
     }
 
     /**
@@ -81,6 +82,30 @@ class PolicyController extends ApiController
     {
         $policy->delete();
         
-        return $this->showOne($policy);
+        return new PolicyResource($policy);
     }
+
+    /* Display a listing of policies with expiration's date between dates
+    *
+    * @param  Request $request
+    * @return \Illuminate\Http\Response
+    */
+   public function expirations(Request $request)
+   {
+       $rules = [
+           'from' => 'required|date',
+           'to' => 'required|date'
+       ];
+
+       $request->validate($rules);
+
+       $to = $request->to;
+       $from = $request->from;
+
+       $policies = Policy::whereRaw("DAYOFYEAR(to) >= DAYOFYEAR('${from}') and DAYOFYEAR(to) <= DAYOFYEAR('${to}')")
+               ->orderByRaw('DAYOFYEAR(to)')
+               ->paginate();
+
+       return PolicyResource::collection($policies);
+   }
 }

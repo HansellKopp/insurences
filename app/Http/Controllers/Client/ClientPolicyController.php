@@ -6,23 +6,11 @@ use App\Client;
 use App\Policy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Policy as PolicyResource;
 
-class ClientPolicyController extends ApiController
+class ClientPolicyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Client $client)
-    {
-        $policies = $client->policies;
-        
-        return $this->showAll($policies);
-    }
-
      /**
      * Store a newly created resource in storage.
      *
@@ -56,7 +44,7 @@ class ClientPolicyController extends ApiController
 
         $item = $client->policies()->save($data);
 
-        return $this->showOne($item, 201);
+        return new PolicyResource($item, 201);
     }
 
 }

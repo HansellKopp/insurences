@@ -6,25 +6,12 @@ use App\Client;
 use App\ClientDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Resources\ClientDocument as ClientDocumentResource;
 
-class ClientDocumentController extends ApiController
+class ClientDocumentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  \App\Client  $client
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Client  $client)
-    {
-        $documents = $client->documents;
-
-        return $this->showAll($documents);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -48,7 +35,7 @@ class ClientDocumentController extends ApiController
 
         $item = ClientDocument::create($data);
 
-        return $this->showOne($item);
+        return new ClientDocumentResource($item);
     }
 
     /**
@@ -92,6 +79,6 @@ class ClientDocumentController extends ApiController
 
         Storage::delete($item->document);
 
-        return $this->showOne($item);
+        return new ClientDocumentResource($item);
     }
 }

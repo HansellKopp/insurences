@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Branch;
 
 use App\Branch;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Branch as BranchResource;
 
-class BranchController extends ApiController
+class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,7 @@ class BranchController extends ApiController
      */
     public function index()
     {
-        $branches = Branch::all();
-
-        return $this->showAll($branches);
+        return BranchResource::collection(Branch::paginate());
     }
 
     /**
@@ -36,7 +35,7 @@ class BranchController extends ApiController
 
         $item = Branch::create($request->all());
 
-        return $this->showOne($item, 201);
+        return new BranchResource($item, 201);
     }
 
     /**
@@ -47,9 +46,8 @@ class BranchController extends ApiController
      */
     public function show(Branch $branch)
     {
-        return $this->showOne($branch);
+        return new BranchResource($branch);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -68,11 +66,13 @@ class BranchController extends ApiController
 
         $branch->fill($request->all());
         
-        $this->checkClean($branch);
+        if($branch->isClean()) {
+            throw new ResourceCleanException();
+        }
 
         $branch->save();
 
-        return $this->showOne($branch);
+        return new BranchResource($branch);
     }
 
     /**
@@ -85,6 +85,6 @@ class BranchController extends ApiController
     {
         $branch->delete();
         
-        return $this->showOne($branch);
+        return new BranchResource($branch);
     }
 }

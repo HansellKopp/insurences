@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Company;
 
 use App\Company;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Company as CompanyResource;
 
-class CompanyController extends ApiController
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +16,8 @@ class CompanyController extends ApiController
      */
     public function index()
     {
-        $companies = Company::all();
-
-        return $this->showAll($companies);
+        return CompanyResource::collection(Company::paginate());
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -39,7 +37,7 @@ class CompanyController extends ApiController
 
         $item = Company::create($request->all());
 
-        return $this->showOne($item, 201);
+        return new CompanyResource($item, 201);
     }
 
     /**
@@ -50,7 +48,7 @@ class CompanyController extends ApiController
      */
     public function show(Company $company)
     {
-        return $this->showOne($company);
+        return new CompanyResource($company);
     }
 
     /**
@@ -70,11 +68,13 @@ class CompanyController extends ApiController
 
         $company->fill($request->all());
         
-        $this->checkClean($company);
+        if($company->isClean()) {
+            throw new ResourceCleanException();
+        }
 
         $company->save();
         
-        return $this->showOne($company);
+        return new CompanyResource($company);
     }
 
     /**
@@ -87,6 +87,6 @@ class CompanyController extends ApiController
     {
         $company->delete();
         
-        return $this->showOne($company);
+        return new CompanyResource($company);
     }
 }
