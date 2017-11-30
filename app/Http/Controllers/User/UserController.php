@@ -4,8 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\User as UserResource;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
@@ -30,13 +31,6 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * 
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $rules = [
@@ -49,7 +43,7 @@ class UserController extends Controller
 
         $data = $request->all();
 
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $data['password'] = Hash::make($data['password']);
 
         $data['verified'] =  User::NOT_VERIFIED;
 
@@ -61,8 +55,6 @@ class UserController extends Controller
 
         return new UserResource($user,201);
     }
-
-
     /**
      * Update the specified resource in storage.
      *
@@ -83,7 +75,9 @@ class UserController extends Controller
 
         $this->validate($request, $rules);
 
-        $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+        $user['api_token'] = null;
+        
+        $user['password'] = Hash::make($request->password);
         
         $user['verified'] =  User::NOT_VERIFIED;
         

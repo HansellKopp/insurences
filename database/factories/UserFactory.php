@@ -7,6 +7,7 @@ use App\Client;
 use App\Policy;
 use App\Receipt;
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +21,10 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\User::class, function (Faker $faker) {
-    static $password;
-
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = password_hash('secret', PASSWORD_DEFAULT),
+        'password' => Hash::make('secret'),
         'remember_token' => App\User::generateRememberToken(),
         'verified' => User::NOT_VERIFIED,
         'verification_token' => App\User::generateVerificationToken(),

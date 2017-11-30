@@ -24,11 +24,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 | Api Resource basic routes
 */
 Route::apiResources([
-    'users' => 'User\UserController',
     'branches' => 'Branch\BranchController',
     'companies' => 'Company\CompanyController',
     'clients' => 'Client\ClientController'
 ]);
+
+/**
+ *  User Authentication routes
+ */
+Route::post('login', 'User\AuthController@login');
+Route::post('logout', 'User\AuthController@logout');
+Route::post('register', 'User\UserController@store');
+Route::resource('users', 'User\UserController', ['only' => ['index', 'show','destroy']]);
 
 /**
  * Retrive clients with birtdays between to dates

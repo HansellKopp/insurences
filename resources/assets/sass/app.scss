@@ -7,3 +7,10 @@
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Toastr
+@import "~toastr/build/toastr.css";
+
+.content {
+    margin: 65px 10px 10px 10px;
+}

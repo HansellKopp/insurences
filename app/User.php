@@ -44,6 +44,16 @@ class User extends Authenticatable
      }
 
     /**
+     * Generate api token
+     * 
+     * @return string
+     */
+    public static function generateApiToken()
+    {
+       return str_random(40);
+    }
+
+    /**
      * Generate user verification token
      * 
      * @return string
