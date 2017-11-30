@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<nav class="navbar navbar-default navbar-fixed-top" id="mainNav">
+		<nav class="navbar navbar-default navbar-fixed-top text-color-white" id="mainNav">
 			<div class="container">
 				<div class="navbar-header">
 
