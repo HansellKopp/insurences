@@ -1,37 +1,59 @@
 <template>
-	<div class="client-show">
-		<div class="client-row">
-			<div class="client-image">
-				<div class="client-box">
-					<img :src="`/images/${client.image}`" v-if="client.image">
-				</div>
-			</div>
-			<div class="client-details">
-				<div class="client-details_inner">
-					<small>Submitted by: {{client.user.name}}</small>
-					<h1 class="client-title">{{client.name}}</h1>
-					<p class="client-description">{{client.description}}</p>
-					<div v-if="authState.api_token && authState.user_id === client.user_id">
-						<router-link :to="`/clients/${client.id}/edit`" class="btn btn-primary">
-							Edit
-						</router-link>
-						<button class="btn btn-danger" @click="remove" :disabled="isRemoving">Delete</button>
-					</div>
-				</div>
-			</div>
+	<div class="panel panel-primary">
+      	<div class="panel-heading">
+			<h4>{{client.name}}</h4>
 		</div>
-		<div class="client-row">
-			<div class="client-ingredients">
-				<div class="client-box">
-					<h3 class="client-sub_title">Ingredients</h3>
-					<ul>
-						<li v-for="ingredient in client.ingredients">
-							<span>{{ingredient.name}}</span>
-							<span>{{ingredient.qty}}</span>
-						</li>
-					</ul>
+		<div class="panel-body"></div>
+			<div class="container">
+				<div class="row">
+					<label class="control-label col-sm-4">Dni:</label>
+					<span class="col-sm-8 form-control-static">{{client.dni}}</span>
+				</div>
+				<div class="row">
+					<label class="control-label col-sm-4">Birth Date:</label>
+					<span class="col-sm-8 form-control-static">{{client.birthDate}}</span>
+				</div>
+				<div class="row">
+					<label class="control-label col-sm-4">Email:</label>
+					<span class="col-sm-8 form-control-static">{{client.email}}</span>
+				</div>
+				<div class="row">
+					<label class="control-label col-sm-4">Phone:</label>
+					<span class="col-sm-8 form-control-static">{{client.phone}}</span>
+				</div>
+				<div class="row">
+					<label class="control-label col-sm-4">address:</label>
+					<p class="col-sm-10 form-control-static">{{client.address}}</p>
 				</div>
 			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<strong>Policies</strong>
+				</div>
+				<div class="panel-body table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Number</th>
+								<th>Branch</th>
+								<th>From</th>
+								<th>To</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="policy in client.policies">
+								<td>{{policy.number}}</td>
+								<td>{{policy.branch}}</td>
+								<td>{{policy.validity.from}}</td>
+								<td>{{policy.validity.to}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		<div class="panel-footer">
+			<router-link :to="`/clients/${client.id}/edit`" class="btn btn-primary">Edit</router-link>
+			<button class="btn btn-danger" @click="remove" :disabled="isRemoving">Delete</button>
 		</div>
 	</div>
 </template>
@@ -44,16 +66,15 @@
 				authState: Auth.state,
 				isRemoving: false,
 				client: {
-					user: {},
-					ingredients: [],
-					directions: []
+					client: {},
+					policies: []
 				}
 			}
 		},
 		created() {
 			get(`/api/clients/${this.$route.params.id}`)
 				.then((res) => {
-					this.client = res.data.client
+					this.client = res.data.data
 				})
 		},
 		methods: {
@@ -63,7 +84,7 @@
 					.then((res) => {
 						if(res.data.deleted) {
 							toastr.success('You have successfully delete client.')
-							this.$router.push('/')
+							this.$router.push('/clients')
 						}
 					})
 			}
