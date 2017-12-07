@@ -20,6 +20,7 @@
     "bootstrap-sass": "^3.3.7"
   },
   "dependencies": {
-    "toastr": "^2.1.2"
+    "toastr": "^2.1.2",
+    "vuejs-datepicker": "^0.9.21"
   }
 }

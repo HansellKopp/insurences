@@ -1,18 +1,28 @@
 <template>
 	<div class="panel panel-primary">
       	<div class="panel-heading">
-			<h3>Clients</h3>
+			<div class="row">
+				<div class="col col-xs-6">
+					<strong>Clients</strong>
+				</div>
+				<div class="col col-xs-6">
+					<router-link class="btn btn-primary pull-right" :to="`/clients/create`" :disabled="isProcessing">
+						<span v-if="isProcessing" >
+							<i  class="fa fa-spinner fa-spin" aria-hidden="true"></i> loading...
+						</span>
+						<span v-else >
+							<i class="fa fa-fw fa-plus" ></i> Add
+						</span>
+					</router-link>
+			 	</div>
+			</div>
 		</div>
 		<div class="panel-body">
-			<router-link class="btn btn-primary" :to="`/clients/create`" :disabled="isProcessing">
-				<span v-if="isProcessing" >
-					<i  class="fa fa-spinner fa-spin" aria-hidden="true"></i> loading...
-				</span>
-				<span v-else >
-					<i class="fa fa-fw fa-plus" ></i> Add
-				</span>
-				
-			</router-link>
+			<ul class="pager">
+				<li class="previous" @click="loadPreviousPage"><a href="#">&larr; Previous</a></li>
+				{{ this.meta.current_page }} / {{ this.meta.last_page }}
+				<li class="next" @click="loadNextPage"><a href="#">Next &rarr;</a></li>
+			</ul>
 		</div>
 		<div class="list-group">
 			<div v-for="client in clients">
@@ -50,19 +60,57 @@
 		data() {
 			return {
 				clients: [],
-				isProcessing: false
+				isProcessing: false,
+				currentSort: 'name',
+				links: [],
+				meta: {
+					current_page: 1,
+					last_page: 1
+				}
 			}
 		},
 		created() {
-			this.isProcessing = true
-			get('/api/clients')
-				.then((res) => {
-					this.clients = res.data.data
-					this.isProcessing = false
-				})
-				.catch((e) => {
-					toastr.error(e.message)
-				} )
+			this.loadData();
+		},
+		computed: {
+    		currentUrl: function () {
+				return `/api/clients?
+				sort_by=${this.currentSort}&
+				page=${this.meta.current_page}`
+			}
+		},
+		methods: {
+			loadData: function() {
+				this.isProcessing = true
+				get(this.currentUrl)
+					.then((res) => {
+						this.clients = res.data.data
+						this.links = res.data.links
+						this.meta  = res.data.meta
+						this.isProcessing = false
+					})
+					.catch((e) => {
+						toastr.error(e.message)
+					} )
+			},
+			loadNextPage: function () {
+				if(this.isProcesing) {
+					return
+				}
+				if((this.meta.current_page < this.meta.last_page) && !this.isProcesing) {
+					this.meta.current_page ++
+					this.loadData()
+				}
+			},
+			loadPreviousPage: function () {
+				if(this.isProcesing) {
+					return
+				}
+				if((this.meta.current_page > 1) && !this.isProcesing) {
+					this.meta.current_page --
+					this.loadData()
+				}
+			},
 		}
 	}
 </script>

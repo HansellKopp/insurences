@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Client;
 
 use App\Client;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Resources\Client as ClientResource;
 
-class ClientController extends Controller
+class ClientController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,16 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return ClientResource::collection(Client::paginate(10));
+        $query = Client::query();
+
+        $parameters =  $parameters = request()->query->all();
+
+        $this->sortBy(Client::class, $query, $parameters);
+
+        $this->filterBy(CLient::class, $query, $parameters);
+        
+        return ClientResource::collection($query->paginate(10));
+
     }
 
     /**

@@ -1,103 +1,93 @@
 <template>
-	<div class="client-show">
-		<div class="client-header">
-			<h3>{{action}} client</h3>
-			<div>
-				<button class="btn btn-primary" @click="save" :disabled="isProcessing">Save</button>
-				<button class="btn" @click="$router.back()" :disabled="isProcessing">Cancel</button>
-			</div>
+	<div class="panel panel-primary">
+      	<div class="panel-heading">
+			<h4>{{action}} client</h4>
 		</div>
-		<div class="client-row">
-			<div class="client-image">
-				<div class="client-box">
-					<image-upload v-model="form.image"></image-upload>
-					<small class="error-control" v-if="error.image">{{error.image[0]}}</small>
-				</div>
-			</div>
-			<div class="client-details">
-				<div class="client-details_inner">
-					<div class="form-group">
-					    <label>Name</label>
-					    <input type="text" class="form-control" v-model="form.name">
-					    <small class="error-control" v-if="error.name">{{error.name[0]}}</small>
-					</div>
-					<div class="form-group">
-					    <label>Description</label>
-					    <textarea class="form-control form-description" v-model="form.description"></textarea>
-					    <small class="error-control" v-if="error.description">{{error.description[0]}}</small>
+		<div class="panel-body"></div>
+			<form class="container-fluid">
+				<input type="hidden" v-model="id"></input>
+				<div class="row">
+					<div class="form-group col col-xs-12 has-feedback"  :class="{ 'has-error' : error['name'] }">
+						<label for="name">Name</label>
+						<input type="text" class="form-control" id="name" placeholder="Enter Name" v-model="client.name">
+						<span class="help-block" v-if="error['name']">{{ error['name'].toString() }}</span>
 					</div>
 				</div>
+				<div class="row">
+					<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['dni'] }">
+						<label for="dni">Dni</label>
+						<input type="text" class="form-control" id="dni" placeholder="Enter Dni" v-model="client.dni">
+						<span class="help-block" v-if="error['dni']">{{ error['dni'].toString() }}</span>
+					</div>
+					<div class="form-group col col-xs-6">
+						<label for="birthDate">Birthdate</label>
+						<Datepicker v-model="client.birthDate"></Datepicker>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['email'] }">
+						<label for="email">Email</label>
+						<input type="email" class="form-control" id="email" placeholder="Enter Email" v-model="client.email">
+						<span class="help-block" v-if="error['email']">{{ error['email'].toString() }}</span>
+					</div>
+					<div class="form-group col col-xs-6">
+						<label for="phone">Phone</label>
+						<input type="text" class="form-control" id="phone" placeholder="Enter Phone" v-model="client.phone">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col col-xs-12">
+						<label for="address">Address</label>
+						<input type="text" class="form-control" id="address" placeholder="Enter Address" v-model="client.address">
+					</div>
+				</div>
+			</form>
+			<div class="panel-footer">
+				<input type="submit" class="btn btn-primary" @click="save" value="Save">
+				<button class="btn btn-info"    @click="back">Cancel</button>
 			</div>
-		</div>
 	</div>
 </template>
 <script type="text/javascript">
 	import Vue from 'vue'
 	import { get, post } from '../../helpers/api'
-	import { toMulipartedForm } from '../../helpers/form'
-	import ImageUpload from '../../components/ImageUpload.vue'
 
 	export default {
-		components: {
-			ImageUpload
-		},
 		data() {
 			return {
-				form: {
-					ingredients: [],
-					directions: []
+				id: null,
+				client: {
+					name: '',
+					dni: '',
+					birthDate: '2017-01-01',
+					email: '',
+					phone: '',
+					address: '',
 				},
 				error: {},
 				isProcessing: false,
-				initializeURL: `/api/clients/create`,
-				storeURL: `/api/clients`,
 				action: 'Create'
 			}
 		},
-		created() {
-			if(this.$route.meta.mode === 'edit') {
-				this.initializeURL = `/api/clients/${this.$route.params.id}/edit`
-				this.storeURL = `/api/clients/${this.$route.params.id}?_method=PUT`
-				this.action = 'Update'
-			}
-			get(this.initializeURL)
-				.then((res) => {
-					Vue.set(this.$data, 'form', res.data.form)
-				})
-		},
 		methods: {
 			save() {
-				const form = toMulipartedForm(this.form, this.$route.meta.mode)
-				post(this.storeURL, form)
-				    .then((res) => {
-				        if(res.data.saved) {
-							tostsr.success(res.data.message)
-				            this.$router.push(`/clients/${res.data.id}`)
-				        }
-				        this.isProcessing = false
-				    })
-				    .catch((err) => {
-				        if(err.response.status === 422) {
-				            this.error = err.response.data
-				        }
-				        this.isProcessing = false
-				    })
-			},
-			addDirection() {
-				this.form.directions.push({
-					description: ''
-				})
-			},
-			addIngredient() {
-				this.form.ingredients.push({
-					name: '',
-					qty: ''
-				})
-			},
-			remove(type, index) {
-				if(this.form[type].length > 1) {
-					this.form[type].splice(index, 1)
-				}
+                this.isProcessing = true
+                this.error = {}
+                post('api/clients', this.client)
+                    .then((res) => {
+						this.isProcessing = false
+                        toastr.success('Save sucessful.')
+                        this.$router.go(-1)
+                    })
+                    .catch((err) => {
+                        if(err.response.status === 422) {
+                            this.error = err.response.data.errors
+                        }
+                        this.isProcessing = false
+                    })
+            },
+			back() {
+				 this.$router.go(-1)
 			}
 		}
 	}
