@@ -15,8 +15,8 @@ const router = new VueRouter({
 	routes: [
 		{ path: '/', component: Welcome },
 		{ path: '/clients', component: Clients },
-		{ path: '/clients/create', component: ClientForm, meta: { mode: 'create' }},
-		{ path: '/clients/edit/:id', component: ClientForm, meta: { mode: 'edit' }},
+		{ path: '/clients/create', component: ClientForm },
+		{ path: '/clients/edit/:id', component: ClientForm },
 		{ path: '/clients/:id', component: ClientShow },
 		{ path: '/register', component: Register },
 		{ path: '/login', component: Login },

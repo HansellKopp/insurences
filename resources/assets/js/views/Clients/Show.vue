@@ -56,7 +56,7 @@
 				</div>
 			</div>
 		<div class="panel-footer">
-			<router-link :to="`/clients/${client.id}/edit`" class="btn btn-primary">Edit</router-link>
+			<router-link :to="`/clients/edit/${client.id}`" class="btn btn-primary">Edit</router-link>
 			<button class="btn btn-danger" @click="remove" :disabled="isRemoving">Delete</button>
 		</div>
 	</div>
@@ -86,10 +86,8 @@
 				this.isRemoving = false
 				del(`/api/clients/${this.$route.params.id}`)
 					.then((res) => {
-						if(res.data.deleted) {
-							toastr.success('You have successfully delete client.')
-							this.$router.push('/clients')
-						}
+						toastr.success('You have successfully delete client.')
+						this.$router.go(-1)
 					})
 			}
 		}

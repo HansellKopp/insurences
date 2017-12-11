@@ -71,6 +71,7 @@
 		},
 		created() {
 			this.loadData();
+        	document.getElementById('app-navbar-collapse').classList.remove('in')
 		},
 		computed: {
     		currentUrl: function () {

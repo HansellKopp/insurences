@@ -10,6 +10,17 @@ export function get(url) {
     })
 }
 
+export function save(url, payload, method = 'POST') {
+    return axios({
+    	method,
+    	url: url,
+    	data: payload,
+    	headers: {
+    		'Authorization': `Bearer ${Auth.state.api_token}`
+    	}
+    })
+}
+
 export function post(url, payload) {
     return axios({
     	method: 'POST',
