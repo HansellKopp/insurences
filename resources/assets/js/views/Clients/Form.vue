@@ -46,7 +46,7 @@
 			</div>
 			<div class="panel-footer">
 				<input type="submit" class="btn btn-primary" value="Save">
-				<button class="btn btn-info"    @click="back">Cancel</button>
+				<button class="btn btn-info"  @click="back">Cancel</button>
 			</div>	
 		</div>
 	</form>	

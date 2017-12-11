@@ -84,6 +84,9 @@
 		methods: {
 			remove() {
 				this.isRemoving = false
+				if(!confirm('are you sure ?')) {
+					return
+				}
 				del(`/api/clients/${this.$route.params.id}`)
 					.then((res) => {
 						toastr.success('You have successfully delete client.')
