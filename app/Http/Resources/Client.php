@@ -38,7 +38,7 @@ class Client extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'dni' => $this->dni,
-            'birthDate' => $this->birth_date,
+            'birthday' => $this->birthday,
             'address' => $this->address,
             'phone' => $this->phone,
             'email' => $this->email,

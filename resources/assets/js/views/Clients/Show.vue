@@ -15,7 +15,7 @@
 				</div>
 				<div class="row">
 					<label class="control-label col-sm-4">Birth Date:</label>
-					<span class="col-sm-8 form-control-static">{{client.birthDate}}</span>
+					<span class="col-sm-8 form-control-static">{{client.birthday}}</span>
 				</div>
 				<div class="row">
 					<label class="control-label col-sm-4">Email:</label>

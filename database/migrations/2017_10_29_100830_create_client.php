@@ -17,7 +17,7 @@ class CreateClient extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('dni',10)->nullable();
-            $table->date('birth_date')->nullable();
+            $table->date('birthday')->nullable();
             $table->string('address')->nullable()->default('');
             $table->string('phone')->nullable()->default('');
             $table->string('email')->nullable()->default('');

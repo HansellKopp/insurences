@@ -45,7 +45,7 @@ $factory->define(App\Client::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'dni' => $faker->randomElement(['V','E']) . $faker->numberBetween(100000,20000000),
-        'birth_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'birthday' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'address' => $faker->address,
         'phone' => $faker->phonenumber,
         'email' => $faker->unique()->safeEmail,

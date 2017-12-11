@@ -20,8 +20,6 @@
     "bootstrap-sass": "^3.3.7",
     "moment": "^2.19.3",
     "toastr": "^2.1.2",
-    "vuejs-datepicker": "^0.9.21"
-  },
-  "dependencies": {
+    "vue-bootstrap-datetimepicker": "^4.1.0"
   }
 }

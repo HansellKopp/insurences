@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Exceptions\ResourceCleanException;
 use App\Http\Resources\Client as ClientResource;
 
 class ClientController extends ApiController
@@ -40,7 +41,8 @@ class ClientController extends ApiController
         $rules = [
             'name' => 'required|unique:clients',
             'dni' => 'required|unique:clients',
-            'email' => 'email'
+            'email' => 'email',
+            'birthday' => 'date'
         ];
 
         $this->validate($request, $rules);
@@ -81,6 +83,8 @@ class ClientController extends ApiController
 
         $client->fill($request->all());
 
+        $client->birthday = $request->birthday;
+
         if($client->isClean()) {
             throw new ResourceCleanException();
         }
@@ -120,8 +124,8 @@ class ClientController extends ApiController
        $to = $request->to;
        $from = $request->from;
 
-       $clients = Client::whereRaw("DAYOFYEAR(birth_date) >= DAYOFYEAR('${from}') and DAYOFYEAR(birth_date) <= DAYOFYEAR('${to}')")
-               ->orderByRaw('DAYOFYEAR(birth_date)')
+       $clients = Client::whereRaw("DAYOFYEAR(birthday) >= DAYOFYEAR('${from}') and DAYOFYEAR(birthday) <= DAYOFYEAR('${to}')")
+               ->orderByRaw('DAYOFYEAR(birthday)')
                ->paginate();
 
        return ClientResource::collection($clients);

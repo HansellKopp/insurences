@@ -15,14 +15,14 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="form-group col col-xs-6">
+							<label for="birthDate">Birthdate</label>
+							<date-picker v-model="client.birthday" :config="config" class="form-control"></date-picker>
+						</div>
 						<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['dni'] }">
 							<label for="dni">Dni</label>
 							<input type="text" class="form-control" id="dni" placeholder="Enter Dni" v-model="client.dni">
 							<span class="help-block" v-if="error['dni']">{{ error['dni'].toString() }}</span>
-						</div>
-						<div class="form-group col col-xs-6">
-							<label for="birthDate">Birthdate</label>
-							<Datepicker v-model="client.birthDate" class="form-control"></Datepicker>
 						</div>
 					</div>
 					<div class="row">
@@ -62,7 +62,7 @@
 				client: {
 					name: '',
 					dni: '',
-					birthDate: moment().format('YYYY-MM-DD'),
+					birthday: moment().format('YYYY-MM-DD'),
 					email: '',
 					phone: '',
 					address: '',
@@ -71,7 +71,11 @@
 				isProcessing: false,
 				url: 'api/clients',
 				method: 'POST',
-				action: 'Create'
+				action: 'Create',
+				config: {
+					format: 'YYYY/MM/DD',
+					useCurrent: false,
+				},   
 			}
 		},
 		created() {
@@ -91,7 +95,7 @@
 		methods: {
 			createOrUpdate() {
 				this.error = {}
-                this.isProcessing = true
+				this.isProcessing = true
 				save(this.url, this.client, this.method)
 				.then((res) => {
 					this.isProcessing = false
@@ -102,6 +106,9 @@
 					this.isProcessing = false
 					if(err.response.status === 422) {
 						this.error = err.response.data.errors
+						if(typeof this.error === 'string') {
+							toastr.error(this.error)
+						}
 					}
 					
 				})

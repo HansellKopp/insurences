@@ -15,8 +15,10 @@ try {
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import datePicker from 'vue-bootstrap-datetimepicker';
+import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
 
-Vue.component('Datepicker', require('vuejs-datepicker'));
+Vue.use(datePicker);
 
 const app = new Vue({
 	el: '#root',
@@ -24,3 +26,4 @@ const app = new Vue({
 	components: { App },
 	router
 })
+

@@ -35,7 +35,7 @@
 							{{client.dni}}
 						</div>
 						<div class="col col-xs-4">
-							{{client.birthDate}}
+							{{client.birthday}}
 						</div>
 					</div>
 					<div class="row">
