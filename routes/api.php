@@ -16,9 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-/*
-| Resources routes
-*/
+/**
+ * Search
+ */
+Route::get('clients/search', 'Client\ClientController@search');
 
 /*
 | Api Resource basic routes

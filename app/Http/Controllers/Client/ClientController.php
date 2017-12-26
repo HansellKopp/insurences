@@ -11,6 +11,21 @@ use App\Http\Resources\Client as ClientResource;
 class ClientController extends ApiController
 {
     /**
+     * Search
+     */
+    public function search()
+    {
+        $results = Client::orderBy('name')
+            ->when(request('q'), function($query) {
+                $query->where('name', 'like', '%'.request('q').'%')
+                      ->orWhere('dni', 'like', '%'.request('q').'%');
+            })
+            ->limit(6)
+            ->get();
+        return response()
+            ->json(['data' => $results], 200);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
