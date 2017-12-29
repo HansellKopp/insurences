@@ -1,49 +1,15 @@
 <template>
 	<div>
-		<!-- Modal Search -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3 class="modal-title">Search clients</h3>
-					</div>
-					<div class="modal-body">
-						<input type="text" 
-							class="form-control"
-							placeholder="search" 
-							v-model="searchToken"
-							@keyup="loadSearch"
-						>
-						<div class="list-group">
-							<div v-for="item in searchItems">
-								<router-link data-dismiss="modal" class="list-group-item" :to="`/clients/${item.id}`">
-									<div class="row">
-										<div class="col col-xs-8">
-											<strong class="text-left">{{item.name}}</strong>
-										</div>
-										<div class="col col-xs-4">
-											{{item.dni}}
-										</div>
-									</div>
-								</router-link>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		<modal-search title="clientes" url="/api/clients" />
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col col-xs-7">
+					<div class="col col-xs-6">
 						<strong>Clients</strong>
 					</div>
-					<div class="col col-xs-5">
+					<div class="col col-xs-6">
 						<div class="pull-right">
-							<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+							<button class="btn btn-primary" data-toggle="modal" data-target="#myModalSearch">
 								<i class="fa fa-fw fa-search" ></i>
 							</button>
 							<router-link class="btn btn-primary" :to="`/clients/create`" :disabled="isProcessing">
@@ -66,7 +32,7 @@
 				</ul>
 			</div>
 			<div class="list-group">
-				<div v-for="client in clients">
+				<div v-for="client in clients" :key="client.id">
 					<router-link class="list-group-item" :to="`/clients/${client.id}`">
 						<div class="row">
 							<div class="col col-xs-5">
@@ -95,9 +61,12 @@
 		</div>
 	</div>
 </template>
+
 <script type="text/javascript">
 	import toastr from 'toastr'
 	import { get } from '../../helpers/api'
+	import modalSearch from '../../components/modalSearch'
+
 	export default {
 		data() {
 			return {
@@ -106,13 +75,15 @@
 				modalShow: false,
 				currentSort: 'name',
 				searchToken: '',
-				searchItems: [],
 				links: [],
 				meta: {
 					current_page: 1,
 					last_page: 1
 				}
 			}
+		},
+		components: {
+			modalSearch
 		},
 		created() {
 			this.loadData();
@@ -137,18 +108,6 @@
 						this.clients = res.data.data
 						this.links = res.data.links
 						this.meta  = res.data.meta
-						this.isProcessing = false
-					})
-					.catch((e) => {
-						toastr.error(e.message)
-					} )
-			},
-			loadSearch: function() {
-				this.isProcessing = true
-				console.log(this.searchToken)
-				get(`/api/clients/search?q=${this.searchToken}`)
-					.then((res) => {
-						this.searchItems = res.data.data
 						this.isProcessing = false
 					})
 					.catch((e) => {
