@@ -14,13 +14,12 @@
 					>
 					<div class="list-group">
 						<div v-for="item in searchItems" :key="item.id">
-							<router-link data-dismiss="modal" class="list-group-item" :to="`/clients/${item.id}`">
+							<router-link data-dismiss="modal" class="list-group-item" :to="`${url}/${item.id}`">
 								<div class="row">
-									<div class="col col-xs-8">
-										<strong class="text-left">{{ item.name }}</strong>
-									</div>
-									<div class="col col-xs-4">
-										{{ item.dni }}
+									<div v-for="col in searchFields" :key="col.field">
+										<div :class="col.class">
+											<strong class="text-left">{{ item[col.field] }}</strong>
+										</div>
 									</div>
 								</div>
 							</router-link>
@@ -50,15 +49,22 @@
 			    type: String,
 			    default: null
             },
+			resource: {
+			    type: String,
+			    default: null
+            },
 			url: {
 				type: String,
+				default: null
+			},
+			searchFields: {
+				type: Array,
 				default: null
 			}
 		},
 		methods: {
 			loadSearch () {
-				console.log(`${this.$props.url}/search?q=${this.searchToken}`)
-				get(`${this.$props.url}/search?q=${this.searchToken}`)
+				get(`/api/${this.$props.resource}/search?q=${this.searchToken}`)
 					.then((res) => {
 						this.searchItems = res.data.data
 					})

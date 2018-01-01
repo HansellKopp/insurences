@@ -45,7 +45,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="policy in client.policies">
+							<tr v-for="policy in client.policies" :key="policy.id">
 								<td>{{policy.number}}</td>
 								<td>{{policy.branch}}</td>
 								<td>{{policy.validity.from}}</td>
