@@ -9,7 +9,9 @@ try {
 		"closeButton": true,
 		"positionClass": "toast-bottom-right"
 	}
-} catch (e) {}
+} catch (e) {
+	console.log(e)
+}
 
 
 import Vue from 'vue'

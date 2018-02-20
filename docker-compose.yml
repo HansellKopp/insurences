@@ -15,6 +15,7 @@ services:
     build:
       context: ./
       dockerfile: app.docker
+    container_name: app
     volumes:
       - ./:/var/www
     links:
@@ -24,8 +25,14 @@ services:
       - DB_HOST=db
   db:
     image: mysql:5.7
+    container_name: db
     environment:
       - MYSQL_ROOT_PASSWORD=secret
       - MYSQL_DATABASE=homestead
     ports:
       - "33061:3306"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8000:8080

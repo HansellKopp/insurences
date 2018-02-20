@@ -4,11 +4,28 @@ namespace App\Http\Controllers\Company;
 
 use App\Company;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Company as CompanyResource;
 
-class CompanyController extends Controller
+class CompanyController extends ApiController
 {
+    /**
+     * Search
+     */
+    public function search()
+    {
+        $results = Company::orderBy('name')
+            ->when(request('q'), function($query) {
+                $query->where('name', 'like', '%'.request('q').'%')
+                      ->orWhere('dni', 'like', '%'.request('q').'%')
+                      ->orWhere('contact_name', 'like', '%'.request('q').'%');
+            })
+            ->limit(6)
+            ->get();
+        return response()
+            ->json(['data' => $results], 200);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +33,15 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return CompanyResource::collection(Company::paginate());
+        $query = Company::query();
+
+        $parameters =  $parameters = request()->query->all();
+
+        $this->sortBy(Company::class, $query, $parameters);
+
+        $this->filterBy(Company::class, $query, $parameters);
+        
+        return CompanyResource::collection($query->paginate(10));
     }
 
     /**

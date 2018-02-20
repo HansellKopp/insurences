@@ -115,7 +115,7 @@ class Handler extends ExceptionHandler
 
         if(!config('app.debug'))
         {
-            
+            dd($exception);
             return $this->errorResponse('internal error', 500);
         }
         

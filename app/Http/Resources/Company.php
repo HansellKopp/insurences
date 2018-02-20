@@ -15,8 +15,10 @@ class Company extends Resource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name, 
-            'dni' => $this->dni, 
+            'dni' => $this->dni,
+            'contact_name' => $this->contact_name,
             'address' => $this->address, 
             'phone' => $this->phone, 
             'email' => $this->email,

@@ -53,6 +53,10 @@ Route::resource('clients.documents', 'Client\ClientDocumentController', ['only' 
  */
 Route::post('clients.policies', 'Client\ClientPolicyController@store');
 
+/**
+ * Retrive company's policies
+ */
+Route::get('companies/{id}/policies', 'Company\CompanyPolicyController@index');
 
 /*
 | Policies resource partial methods

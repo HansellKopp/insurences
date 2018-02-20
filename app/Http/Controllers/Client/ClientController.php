@@ -22,8 +22,7 @@ class ClientController extends ApiController
             })
             ->limit(6)
             ->get();
-        return response()
-            ->json(['data' => $results], 200);
+        return response()->json(['data' => $results], 200);
     }
     /**
      * Display a listing of the resource.

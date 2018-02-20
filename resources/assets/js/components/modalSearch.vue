@@ -11,6 +11,7 @@
 						placeholder="search" 
 						v-model="searchToken"
 						@keyup="loadSearch"
+						autofocus
 					>
 					<div class="list-group">
 						<div v-for="item in searchItems" :key="item.id">

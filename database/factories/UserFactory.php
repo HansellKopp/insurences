@@ -37,7 +37,8 @@ $factory->define(App\Company::class, function (Faker $faker) {
         'dni' => $faker->randomElement(['J','G']) . (string)$faker->numberBetween(100000000,50000000),
         'contact_name' => $faker->name,
         'address' => $faker->address,
-        'phone' => $faker->phoneNumber
+        'phone' => $faker->phoneNumber,
+        'email' => $faker->unique()->safeEmail
     ];
 });
 

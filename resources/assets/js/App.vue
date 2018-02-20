@@ -21,9 +21,8 @@
 
           <!-- Left Side Of Navbar -->
           <ul class="nav navbar-nav">
-						<li class="dropdown" v-if="auth">
-							<li><router-link class="nav-link" to="/clients">Clients</router-link></li>
-            </li>
+            <li class="dropdown" v-if="auth"><li><router-link class="nav-link" to="/companies">Companies</router-link></li></li>
+						<li class="dropdown" v-if="auth"><li><router-link class="nav-link" to="/clients">Clients</router-link></li></li>
             <li class="dropdown" v-if="auth">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 								<i class="fa "></i> Reports <span class="caret"></span></a>
@@ -45,10 +44,10 @@
                 </li>
 								<li v-else>
 									<router-link v-if="guest" class="nav-link" to="/login">
-										<i class="fa fa-fw fa-sign-in"></i> Login</a>
+										<i class="fa fa-fw fa-sign-in"></i><span>Login</span>
 									</router-link>
 									<router-link v-if="guest" class="nav-link" to="/register">
-										<i class="fa fa-fw fa-user-plus"></i> Register</a>
+										<i class="fa fa-fw fa-user-plus"></i><span>Register</span>
 									</router-link>
 								</li>
               </ul>
