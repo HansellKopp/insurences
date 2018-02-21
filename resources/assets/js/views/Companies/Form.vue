@@ -2,44 +2,43 @@
 	<form @submit.prevent="createOrUpdate">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h4>{{action}} client</h4>
+				<h4>{{action}} Company</h4>
 			</div>
 			<div class="panel-body">
 				<div class="container-fluid">
-					<input type="hidden" v-model="id"></input>
+					<input type="hidden" v-model="id" />
 					<div class="row">
-						<div class="form-group col col-xs-12 has-feedback"  :class="{ 'has-error' : error['name'] }">
+						<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['name'] }">
 							<label for="name">Name</label>
 							<input type="text" class="form-control" id="name" placeholder="Enter Name" v-model="client.name">
 							<span class="help-block" v-if="error['name']">{{ error['name'].toString() }}</span>
 						</div>
+						<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['contac_name'] }">
+							<label for="contactName">Name</label>
+							<input type="text" class="form-control" id="contactName" placeholder="Enter Contact Name" v-model="client.contact_name">
+							<span class="help-block" v-if="error['contact_name']">{{ error['contact_name'].toString() }}</span>
+						</div>
 					</div>
 					<div class="row">
-						<div class="form-group col col-xs-6">
-							<label for="birthDate">Birthdate</label>
-							<date-picker v-model="client.birthday" :config="config" class="form-control"></date-picker>
-						</div>
 						<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['dni'] }">
 							<label for="dni">Dni</label>
 							<input type="text" class="form-control" id="dni" placeholder="Enter Dni" v-model="client.dni">
 							<span class="help-block" v-if="error['dni']">{{ error['dni'].toString() }}</span>
 						</div>
-					</div>
-					<div class="row">
 						<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['email'] }">
 							<label for="email">Email</label>
 							<input type="email" class="form-control" id="email" placeholder="Enter Email" v-model="client.email">
 							<span class="help-block" v-if="error['email']">{{ error['email'].toString() }}</span>
-						</div>
-						<div class="form-group col col-xs-6">
-							<label for="phone">Phone</label>
-							<input type="text" class="form-control" id="phone" placeholder="Enter Phone" v-model="client.phone">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col col-xs-12">
 							<label for="address">Address</label>
 							<input type="text" class="form-control" id="address" placeholder="Enter Address" v-model="client.address">
+						</div>
+						<div class="form-group col col-xs-6">
+							<label for="phone">Phone</label>
+							<input type="text" class="form-control" id="phone" placeholder="Enter Phone" v-model="client.phone">
 						</div>
 					</div>
 				</div>

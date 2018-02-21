@@ -14,8 +14,8 @@
 					<span class="col-sm-8 form-control-static">{{company.dni}}</span>
 				</div>
 				<div class="row">
-					<label class="control-label col-sm-4">Birth Date:</label>
-					<span class="col-sm-8 form-control-static">{{company.birthday}}</span>
+					<label class="control-label col-sm-4">Contact Name:</label>
+					<span class="col-sm-8 form-control-static">{{company.contact_name}}</span>
 				</div>
 				<div class="row">
 					<label class="control-label col-sm-4">Email:</label>
@@ -34,31 +34,10 @@
 				<div class="panel-heading">
 					<strong>Policies</strong>
 				</div>
-				<div class="panel-body table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Number</th>
-								<th>Branch</th>
-								<th>From</th>
-								<th>To</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="policy in companies.policies" :key="policy.id">
-								<td>{{policy.number}}</td>
-								<td>{{policy.branch}}</td>
-								<td>{{policy.validity.from}}</td>
-								<td>{{policy.validity.to}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
 			</div>
 		<div class="panel-footer">
 			<router-link :to="`/companies/edit/${company.id}`" class="btn btn-primary">Edit</router-link>
 			<button class="btn btn-danger" @click="remove" :disabled="isRemoving">Delete</button>
-			<router-link :to="`/companies/${company.id}`/policies" class="btn btn-success">Edit</router-link>
 		</div>
 	</div>
 </template>
@@ -72,8 +51,7 @@
 				isRemoving: false,
 				baseUrl: '/api/companies/',
 				company: {
-					company: {},
-					policies: []
+					company: {}
 				}
 			}
 		},
@@ -99,3 +77,5 @@
 		}
 	}
 </script>
+
+  

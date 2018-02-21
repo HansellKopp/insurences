@@ -32,12 +32,12 @@ export default {
 						]
 					},
 					{ 
-						'id': 1, 'showFields': [
+						'id': 2, 'showFields': [
 							{ 'field': 'email', 'class': 'col-xs-12'},	
 						]
 					},
 					{ 
-						'id': 1, 'showFields': [
+						'id': 3, 'showFields': [
 							{ 'field': 'phone', 'class': 'col-xs-12'}	
 						]
 					}
