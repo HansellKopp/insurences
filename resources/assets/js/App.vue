@@ -21,15 +21,9 @@
 
           <!-- Left Side Of Navbar -->
           <ul class="nav navbar-nav">
-            <li class="dropdown" v-if="auth"><li><router-link class="nav-link" to="/companies">Companies</router-link></li></li>
-						<li class="dropdown" v-if="auth"><li><router-link class="nav-link" to="/clients">Clients</router-link></li></li>
-            <li class="dropdown" v-if="auth">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<i class="fa "></i> Reports <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#/users"><i class="fa fa-users"></i> Users</a></li>
-                  </ul>
-            </li>
+            <li v-if="auth"><router-link class="nav-link" to="/branches">Branches</router-link></li>
+            <li v-if="auth"><router-link class="nav-link" to="/companies">Companies</router-link></li>            
+            <li v-if="auth"><router-link class="nav-link" to="/clients">Clients</router-link></li>
           </ul>
 
           <!-- Right Side Of Navbar -->

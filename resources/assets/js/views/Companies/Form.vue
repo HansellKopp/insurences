@@ -14,7 +14,7 @@
 							<span class="help-block" v-if="error['name']">{{ error['name'].toString() }}</span>
 						</div>
 						<div class="form-group col col-xs-6 has-feedback"  :class="{ 'has-error' : error['contac_name'] }">
-							<label for="contactName">Name</label>
+							<label for="contactName">Contact Name</label>
 							<input type="text" class="form-control" id="contactName" placeholder="Enter Contact Name" v-model="client.contact_name">
 							<span class="help-block" v-if="error['contact_name']">{{ error['contact_name'].toString() }}</span>
 						</div>

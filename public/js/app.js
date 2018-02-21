@@ -59431,12 +59431,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -60424,38 +60418,55 @@ var render = function() {
             },
             [
               _c("ul", { staticClass: "nav navbar-nav" }, [
-                _vm.auth ? _c("li", { staticClass: "dropdown" }) : _vm._e(),
-                _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      { staticClass: "nav-link", attrs: { to: "/companies" } },
-                      [_vm._v("Companies")]
+                _vm.auth
+                  ? _c(
+                      "li",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "nav-link",
+                            attrs: { to: "/branches" }
+                          },
+                          [_vm._v("Branches")]
+                        )
+                      ],
+                      1
                     )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _vm.auth ? _c("li", { staticClass: "dropdown" }) : _vm._e(),
-                _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      { staticClass: "nav-link", attrs: { to: "/clients" } },
-                      [_vm._v("Clients")]
-                    )
-                  ],
-                  1
-                ),
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm.auth
-                  ? _c("li", { staticClass: "dropdown" }, [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _vm._m(2)
-                    ])
+                  ? _c(
+                      "li",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "nav-link",
+                            attrs: { to: "/companies" }
+                          },
+                          [_vm._v("Companies")]
+                        )
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.auth
+                  ? _c(
+                      "li",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "nav-link",
+                            attrs: { to: "/clients" }
+                          },
+                          [_vm._v("Clients")]
+                        )
+                      ],
+                      1
+                    )
                   : _vm._e()
               ]),
               _vm._v(" "),
@@ -60561,42 +60572,6 @@ var staticRenderFns = [
         },
         [_c("i", { staticClass: "fa fa-bars" })]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "dropdown-toggle",
-        attrs: {
-          href: "#",
-          "data-toggle": "dropdown",
-          role: "button",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
-      },
-      [
-        _c("i", { staticClass: "fa " }),
-        _vm._v(" Reports "),
-        _c("span", { staticClass: "caret" })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "dropdown-menu" }, [
-      _c("li", [
-        _c("a", { attrs: { href: "#/users" } }, [
-          _c("i", { staticClass: "fa fa-users" }),
-          _vm._v(" Users")
-        ])
-      ])
     ])
   }
 ]
@@ -65226,7 +65201,7 @@ var render = function() {
               _c(
                 "div",
                 {
-                  staticClass: "form-group col col-xs-12 has-feedback",
+                  staticClass: "form-group col col-xs-6 has-feedback",
                   class: { "has-error": _vm.error["name"] }
                 },
                 [
@@ -65274,7 +65249,7 @@ var render = function() {
                 },
                 [
                   _c("label", { attrs: { for: "contactName" } }, [
-                    _vm._v("Name")
+                    _vm._v("Contact Name")
                   ]),
                   _vm._v(" "),
                   _c("input", {
