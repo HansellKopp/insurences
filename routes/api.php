@@ -31,6 +31,10 @@ Route::apiResources([
 ]);
 
 /**
+ * Branch policies
+ */
+Route::get('branches/{id}/policies', 'Branch\BranchPolicyController@index');
+/**
  *  User Authentication routes
  */
 Route::post('login', 'User\AuthController@login');

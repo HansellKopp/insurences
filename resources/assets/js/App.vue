@@ -1,56 +1,45 @@
 <template>
-	<div>
-		<nav class="navbar navbar-default navbar-fixed-top text-color-white" id="mainNav">
-      <button type="button" class="btn btn-back navbar-btn pull-left" @click="goBack">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </button>
-      <router-link class="btn btn-back navbar-btn pull-left" to="/welcome">
-              <span class="glyphicon glyphicon-home"></span>
+  <div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a href="/back" class="btn navbar-icon pull-left" @click.prevent="goBack">
+        <span class="fa fa-chevron-left"></span>
+      </a>
+      <router-link class="btn navbar-icon pull-left" to="/welcome">
+            <span class="fa fa-home"></span>
       </router-link>
-			<div class="container">
-				<div class="navbar-header">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-					<!-- Collapsed Hamburger -->
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-						<i class="fa fa-bars"></i>
-					</button>
-
-			  </div>
-
-          <div class="collapse navbar-collapse" id="app-navbar-collapse">
-
-          <!-- Left Side Of Navbar -->
-          <ul class="nav navbar-nav">
-            <li v-if="auth"><router-link class="nav-link" to="/branches">Branches</router-link></li>
-            <li v-if="auth"><router-link class="nav-link" to="/companies">Companies</router-link></li>            
-            <li v-if="auth"><router-link class="nav-link" to="/clients">Clients</router-link></li>
-          </ul>
-
-          <!-- Right Side Of Navbar -->
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <i class="fa fa-user fa-fw"></i> {{ username ? username : 'User' }} <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" role="menu">
-                <li v-if="auth">
-                  <a @click="logout"><i class="fa fa-fw fa-sign-out"></i> Logout</a>
-                </li>
-								<li v-else>
-									<router-link v-if="guest" class="nav-link" to="/login">
-										<i class="fa fa-fw fa-sign-in"></i><span>Login</span>
-									</router-link>
-									<router-link v-if="guest" class="nav-link" to="/register">
-										<i class="fa fa-fw fa-user-plus"></i><span>Register</span>
-									</router-link>
-								</li>
-              </ul>
-            </li>
-	        </ul>
-        </div>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+          <li v-if="auth"><router-link class="nav-link" to="/branches">Branches</router-link></li>
+          <li v-if="auth"><router-link class="nav-link" to="/companies">Companies</router-link></li>            
+          <li v-if="auth"><router-link class="nav-link" to="/clients">Clients</router-link></li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#user" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <i class="fa fa-user fa-fw"></i> {{ username ? username : 'User' }} <span class="caret"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <div v-if="auth">
+                <a @click="logout"><i class="fa fa-fw fa-sign-out" /> Logout</a>
+              </div>
+              <div v-else>
+                <div>
+                  <router-link to="/login"><i class="fa fa-sign-in fa-fw" /> Login</router-link>
+                </div>
+                <div>
+                  <router-link to="/register"><i class="fa fa-user-plus fa-fw" /> Register</router-link>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </nav>
-		<div class="content">
+		<div class="container-fluid content">
 			<router-view></router-view>
 		</div>
 	</div>
@@ -120,83 +109,12 @@
 </script>
 
 <style lang="scss" scoped>
-
+.navbar-icon {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.3em;
+}
 .content {
     margin: 65px 10px 10px 10px;
 }
 
-/* Nav links */
-$bgDefault      : #53b5ea;
-$bgHighlight    : #61b9e8;
-$colDefault     : #ecf0f1;
-$colHighlight   : #29159c;
-$dropDown       : true;
-.btn-back {
-  background-color: $bgDefault;
-  border-color: transparent;
-  color: $colDefault; 
-}
-.navbar-default {
-  background-color: $bgDefault;
-  border-color: $bgHighlight;
-  .navbar-brand {
-    color: $colDefault;
-    &:hover, &:focus {
-      color: $colHighlight; }}
-  .navbar-text {
-    color: $colDefault; }
-  .navbar-nav {
-    > li {
-      > a {
-        color: $colDefault;
-        &:hover,  &:focus {
-          color: $colHighlight; }}
-      @if $dropDown {
-        > .dropdown-menu {
-          background-color: $bgDefault;
-          > li {
-            > a {
-              color: $colDefault;
-              &:hover,  &:focus {
-                color: $colHighlight;
-                background-color: $bgHighlight; }}
-            &.divider {
-              background-color: $bgHighlight;}}}}}
-    @if $dropDown {
-      .open .dropdown-menu > .active {
-        > a, > a:hover, > a:focus {
-          color: $colHighlight;
-          background-color: $bgHighlight; }}}
-    > .active {
-      > a, > a:hover, > a:focus {
-        color: $colHighlight;
-        background-color: $bgHighlight; }}
-    > .open {
-      > a, > a:hover, > a:focus {
-        color: $colHighlight;
-        background-color: $bgHighlight; }}}
-  .navbar-toggle {
-    border-color: $bgHighlight;
-    &:hover, &:focus {
-      background-color: $bgHighlight; }
-    .icon-bar {
-      background-color: $colDefault; }}
-  .navbar-collapse,
-  .navbar-form {
-    border-color: $colDefault; }
-  .navbar-link {
-    color: $colDefault;
-    &:hover {
-      color: $colHighlight; }}}
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu {
-    > li > a {
-      color: $colDefault;
-      &:hover, &:focus {
-        color: $colHighlight; }}
-    > .active {
-      > a, > a:hover, > a:focus {
-        color: $colHighlight;
-        background-color: $bgHighlight; }}}
-}
 </style>

@@ -21,5 +21,9 @@
     "moment": "^2.19.3",
     "toastr": "^2.1.2",
     "vue-bootstrap-datetimepicker": "^4.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "popper.js": "^1.12.9"
   }
 }

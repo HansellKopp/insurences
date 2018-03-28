@@ -22,6 +22,7 @@ class Company extends Resource
             'address' => $this->address, 
             'phone' => $this->phone, 
             'email' => $this->email,
+            'policies_count' => $this->policies()->count(),
         ];
     }
 }

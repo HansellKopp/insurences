@@ -6,6 +6,7 @@
 		:searchFields="searchFields"
 		:listRows="listRows"
 		:sortBy="sortBy"
+		:buttons="buttons"
 	/>
 </template>
 
@@ -26,23 +27,29 @@ export default {
 			],
 			listRows: [
 					{ 
+						'class': 'col',
 						'id': 1, 'showFields': [
-							{ 'field': 'name', 'class': 'col-xs-5'},
-							{ 'field': 'dni', 'class': 'col-xs-3'},
-							{ 'field': 'contact_name', 'class': 'col-xs-4'},
+							{ 'field': 'name'},
+							{ 'field': 'dni'},
+							{ 'field': 'contact_name'},
 						]
 					},
 					{ 
+						'class': 'col d-none d-lg-block',
 						'id': 2, 'showFields': [
-							{ 'field': 'email', 'class': 'col-xs-12'},	
+							{ 'field': 'email' },	
 						]
 					},
 					{ 
+						'class': 'col d-none d-lg-block',
 						'id': 3, 'showFields': [
-							{ 'field': 'phone', 'class': 'col-xs-12'}	
+							{ 'field': 'phone'}	
 						]
 					}
 			],
+			buttons: [
+				{ 'id': 1, 'caption': 'policies', 'path': 'policies', 'field': 'policies_count'}
+			]
 		}
 	}
 }

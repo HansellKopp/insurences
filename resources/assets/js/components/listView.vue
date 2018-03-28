@@ -1,52 +1,51 @@
 <template>
-	<div>
+	<div class="card">
 		<modal-search :title="title" :resource="resource" :url="url" :searchFields="searchFields"/>
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col col-xs-6">
-						<strong>{{ title }}</strong>
-					</div>
-					<div class="col col-xs-6">
-						<div class="pull-right">
-							<button class="btn btn-primary" data-toggle="modal" data-target="#myModalSearch">
-								<i class="fa fa-fw fa-search" ></i>
-							</button>
-							<router-link class="btn btn-primary" :to="`${url}/create`" :disabled="isProcessing">
-								<span v-if="isProcessing" >
-									<i  class="fa fa-spinner fa-spin" aria-hidden="true"></i> loading...
-								</span>
-								<span v-else >
-									<i class="fa fa-fw fa-plus" ></i> Add
-								</span>
+		<div class="cart-title list-title d-flex  justify-content-between align-items-center">
+			<h2 class="title">{{ title }}</h2>
+		</div>
+		<div class="btn-group btn-group float-right" role="group">
+			<a class="btn" data-toggle="modal" data-target="#myModalSearch"><i class="fa fa-fw fa-search" /></a>
+			<a class="btn" @click="loadPreviousPage"><i class="fa fa-chevron-left"></i></a>
+			<span class="btn">{{ this.meta.current_page }}/{{ this.meta.last_page }}</span>
+			<a class="btn" @click="loadNextPage"><i class="fa fa-chevron-right" /></a>
+			<router-link class="btn" :to="`${url}/create`" :disabled="isProcessing">
+				<span v-if="isProcessing" >
+					<i  class="fa fa-spinner fa-spin" aria-hidden="true"></i>...
+				</span>
+				<span v-else >
+					<i class="fa fa-fw fa-plus" ></i>
+				</span>
+			</router-link>
+		</div>
+		<div class="d-flex">
+			<div class="list-group col-12">
+				<div v-for="item in items" :key="item.id">
+					<div class="list-group-item d-flex justify-content-between align-items-center">
+						<router-link :to="`${url}/${item.id}`" class="d-flex col col-8">
+							<div v-for="row in listRows" :key="row.id" :class="row.class">
+								<div v-for="col in row.showFields" :key="col.field">
+									<span class="text-left">{{ item[col.field] }}</span>
+								</div>
+							</div>
+						</router-link>
+						<div v-for="button in buttons" :key="button.id" class="col">
+							<router-link class="btn btn-default" :to="`${url}/${item.id}/${button.path}`">
+								<span>{{button.caption}}  </span><span class="badge badge-primary badge-pill">{{ item[button.field]}}</span>
 							</router-link>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="panel-body">
-				<ul class="pager">
-					<li class="previous" @click="loadPreviousPage"><a href="#">&larr; Previous</a></li>
-					{{ this.meta.current_page }} / {{ this.meta.last_page }}
-					<li class="next" @click="loadNextPage"><a href="#">Next &rarr;</a></li>
-				</ul>
-			</div>
-			<div class="list-group">
-				<div v-for="item in items" :key="item.id">
-					<router-link class="list-group-item" :to="`${url}/${item.id}`">
-						<div class="row" v-for="row in listRows" :key="row.id">
-							<div v-for="col in row.showFields" :key="col.field">
-								<div :class="col.class">
-									<strong class="text-left">{{ item[col.field] }}</strong>
-								</div>
-							</div>
-						</div>
-					</router-link>
-				</div>
-			</div>
 		</div>
 	</div>
 </template>
+
+<style lang="sass" scoped>
+h2 		{ color: steel-blue; }
+.list-title { background-color: whitesmoke;  border: 1px solid #ffdd57 }
+.card	 	{ box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1)} 	
+</style>
 
 <script type="text/javascript">
 	import toastr from 'toastr'
@@ -87,6 +86,10 @@
 				type: Array,
 				default: null
 			},
+			buttons: {
+				type: Array,
+				default: null
+			},
 			sortBy: {
 				type: String,
 				default: 'id'
@@ -99,9 +102,9 @@
 			this.currentSort = this.$props.sortBy
 			this.loadData()
 			// close menu
-			var el = document.getElementById('app-navbar-collapse')
+			var el = document.getElementById('navbar')
 			if(el) {
-				el.classList.remove('in')
+				el.classList.remove('show')
 			}
 		},
 		computed: {

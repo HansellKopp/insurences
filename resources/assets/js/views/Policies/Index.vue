@@ -1,8 +1,8 @@
 <template>
 	<list-view
-		title="Clients"
-		url="/clients"
-		resource="clients"
+		title="Policies"
+		url="/policies"
+		resource="branches/152/policies"
 		:searchFields="searchFields"
 		:listRows="listRows"
 		:sortBy="sortBy"
@@ -21,33 +21,27 @@ export default {
 		return {
 			sortBy: 'name',
 			searchFields: [
-				{ 'field': 'name', 'class': 'col-xs-5'},
-				{ 'field': 'dni', 'class': 'col-xs-5'}
+				{ 'field': 'number', 'class': 'col-xs-5'},
 			],
 			listRows: [
 					{ 
-						'class': 'col',						
 						'id': 1, 'showFields': [
-							{ 'field': 'name'},
-							{ 'field': 'dni'},
-							{ 'field': 'birthday'},
+							{ 'field': 'number', 'class': 'col-xs-4'},
 						]
 					},
 					{ 
-						'class': 'col d-none d-lg-block',
 						'id': 2, 'showFields': [
-							{ 'field': 'email'},	
+							{ 'field': 'from', 'class': 'col-xs-4'},	
 						]
 					},
 					{ 
-						'class': 'col d-none d-lg-block',
 						'id': 3, 'showFields': [
-							{ 'field': 'phone'}	
+							{ 'field': 'to', 'class': 'col-xs-4'}	
 						]
 					}
 			],
 			buttons: [
-				{ 'id': 1, 'caption': 'policies', 'path': 'policies', 'field': 'policies_count'}
+				{ 'id': 1, 'caption': 'recepts', 'path': 'recept', 'field': 'recepts_count'}
 			]
 		}
 	}

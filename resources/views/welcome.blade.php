@@ -15,7 +15,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <!-- vue app -->
+    <!-- app -->
     <div id="root"></div>
 
     <!-- Scripts -->

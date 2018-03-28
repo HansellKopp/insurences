@@ -5,7 +5,8 @@
 		resource="branches"
 		:searchFields="searchFields"
 		:listRows="listRows"
-		:sortBy="name"
+		:buttons="buttons"
+		sortBy="name"
 	/>
 </template>
 
@@ -20,15 +21,18 @@ export default {
 		return {
 			sortBy: 'name',
 			searchFields: [
-				{ 'field': 'name', 'class': 'col-xs-10'},
+				{ 'field': 'name', 'class': 'col'},
 			],
 			listRows: [
 					{ 
 						'id': 1, 'showFields': [
-							{ 'field': 'name', 'class': 'col-xs-5'}
+							{ 'field': 'name', 'class': 'col'}
 						]
-					}
+					},
 			],
+			buttons: [
+				{ 'id': 1, 'caption': 'policies', 'path': 'policies', 'field': 'policies_count'}
+			]
 		}
 	}
 }

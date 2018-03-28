@@ -1,7 +1,7 @@
 try {
     window.$ = window.jQuery = require('jquery');
 
-	require('bootstrap-sass');
+	require('bootstrap');
 	window._ = require('lodash')
 	window.toastr = require('toastr')
 	toastr.options = {

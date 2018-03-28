@@ -14,9 +14,12 @@ class Branch extends Resource
      */
     public function toArray($request)
     {
+        
+
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'policies_count' => $this->policies()->count()
         ];
     }
 }

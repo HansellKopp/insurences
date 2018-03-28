@@ -43,6 +43,7 @@ class Client extends Resource
             'phone' => $this->phone,
             'email' => $this->email,
             'policies' => $policiesData,
+            'policies_count' => $this->policies()->count(),
             'documents' => ClientDocumentResource::collection($this->documents),
         ];
     }
